@@ -101,17 +101,17 @@ const Bank: React.FC = () => {
 
 const LPTokenHelpText: React.FC<{ bank: BankEntity }> = ({ bank }) => {
   const tombFinance = useTombFinance();
-  const tombAddr = tombFinance.TOMB.address;
-  const tshareAddr = tombFinance.TSHARE.address;
+  const tombAddr = tombFinance.ZOMB.address;
+  const tshareAddr = tombFinance.ZSHARE.address;
 
   let pairName: string;
   let uniswapUrl: string;
-  if (bank.depositTokenName.includes('TOMB')) {
-    pairName = 'TOMB-FTM pair';
-    uniswapUrl = 'https://spookyswap.finance/add/FTM/' + tombAddr;
+  if (bank.depositTokenName.includes('ZOMB')) {
+    pairName = 'ZOMB-ZOMB pair';
+    uniswapUrl = 'https://spookyswap.finance/add/ZOMB/' + tombAddr;
   } else {
-    pairName = 'TSHARE-FTM pair';
-    uniswapUrl = 'https://spookyswap.finance/add/FTM/' + tshareAddr;
+    pairName = 'ZSHARE-ZOMB pair';
+    uniswapUrl = 'https://spookyswap.finance/add/ZOMB/' + tshareAddr;
   }
   return (
     <Card>

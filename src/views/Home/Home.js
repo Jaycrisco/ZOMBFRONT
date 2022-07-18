@@ -46,7 +46,7 @@ const Home = () => {
   const classes = useStyles();
   const TVL = useTotalValueLocked();
   const tombFtmLpStats = useLpStats('ZOMB-ZSP-LP');
-  const tShareFtmLpStats = useLpStats('TSHARE-FTM-LP');
+  const tShareFtmLpStats = useLpStats('ZSHARE-ZOMB-LP');
   const tombStats = useTombStats();
   const tShareStats = usetShareStats();
   const tBondStats = useBondStats();
@@ -71,7 +71,7 @@ const Home = () => {
     () => (tombStats ? Number(tombStats.priceInDollars).toFixed(2) : null),
     [tombStats],
   );
-  const tombPriceInFTM = useMemo(() => (tombStats ? Number(tombStats.tokenInFtm).toFixed(4) : null), [tombStats]);
+  const tombPriceInZOMB = useMemo(() => (tombStats ? Number(tombStats.tokenInFtm).toFixed(4) : null), [tombStats]);
   const tombCirculatingSupply = useMemo(() => (tombStats ? String(tombStats.circulatingSupply) : null), [tombStats]);
   const tombTotalSupply = useMemo(() => (tombStats ? String(tombStats.totalSupply) : null), [tombStats]);
 
@@ -79,7 +79,7 @@ const Home = () => {
     () => (tShareStats ? Number(tShareStats.priceInDollars).toFixed(2) : null),
     [tShareStats],
   );
-  const tSharePriceInFTM = useMemo(
+  const tSharePriceInZOMB = useMemo(
     () => (tShareStats ? Number(tShareStats.tokenInFtm).toFixed(4) : null),
     [tShareStats],
   );
@@ -93,7 +93,7 @@ const Home = () => {
     () => (tBondStats ? Number(tBondStats.priceInDollars).toFixed(2) : null),
     [tBondStats],
   );
-  const tBondPriceInFTM = useMemo(() => (tBondStats ? Number(tBondStats.tokenInFtm).toFixed(4) : null), [tBondStats]);
+  const tBondPriceInZOMB = useMemo(() => (tBondStats ? Number(tBondStats.tokenInFtm).toFixed(4) : null), [tBondStats]);
   const tBondCirculatingSupply = useMemo(
     () => (tBondStats ? String(tBondStats.circulatingSupply) : null),
     [tBondStats],
@@ -101,7 +101,7 @@ const Home = () => {
   const tBondTotalSupply = useMemo(() => (tBondStats ? String(tBondStats.totalSupply) : null), [tBondStats]);
 
   const tombLpZap = useZap({ depositTokenName: 'ZOMB-ZSP-LP' });
-  const tshareLpZap = useZap({ depositTokenName: 'TSHARE-FTM-LP' });
+  const tshareLpZap = useZap({ depositTokenName: 'ZSHARE-ZOMB-LP' });
 
   const StyledLink = styled.a`
     font-weight: 700;
@@ -128,7 +128,7 @@ const Home = () => {
         tshareLpZap.onZap(zappingToken, tokenName, amount);
         onDissmissTshareZap();
       }}
-      tokenName={'TSHARE-FTM-LP'}
+      tokenName={'ZSHARE-ZOMB-LP'}
     />,
   );
 
@@ -146,10 +146,10 @@ const Home = () => {
           <Paper>
             <Box p={4}>
               <h2>Welcome to Tomb Finance</h2>
-              <p>The first algorithmic stablecoin on Fantom Opera, pegged to the price of 1 FTM via seigniorage.</p>
+              <p>The first algorithmic stablecoin on Fantom Opera, pegged to the price of 1 ZOMB via seigniorage.</p>
               <p>
-                Stake your TOMB-FTM LP in the Cemetery to earn TSHARE rewards.
-                Then stake your earned TSHARE in the Masonry to earn more TOMB!
+                Stake your ZOMB-ZOMB LP in the Cemetery to earn ZSHARE rewards.
+                Then stake your earned ZSHARE in the Masonry to earn more ZOMB!
               </p>
             </Box>
           </Paper>
@@ -161,8 +161,8 @@ const Home = () => {
         <Grid container spacing={3}>
     <Grid item  xs={12} sm={12} justify="center"  style={{ margin: '12px' }}>
             <Alert variant="filled" severity="warning">
-              <b>TOMB is a taxed token, which means you will pay a service fee when selling TOMB.
-      Please visit our <StyledLink target="_blank" href="https://docs.tomb.finance">documentation</StyledLink> before purchasing TOMB or TSHARE!</b>
+              <b>ZOMB is a taxed token, which means you will pay a service fee when selling ZOMB.
+      Please visit our <StyledLink target="_blank" href="https://docs.tomb.finance">documentation</StyledLink> before purchasing ZOMB or ZSHARE!</b>
             </Alert>
         </Grid>
         </Grid>
@@ -196,23 +196,23 @@ const Home = () => {
                 style={{ marginRight: '10px' }}
                 className={classes.button}
               >
-                Buy TOMB
+                Buy ZOMB
               </Button>
               <Button variant="contained" target="_blank" href={buyTShareAddress} className={classes.button}>
-                Buy TSHARE
+                Buy ZSHARE
               </Button>
             </CardContent>
           </Card>
         </Grid>
 
-        {/* TOMB */}
+        {/* ZOMB */}
         <Grid item xs={12} sm={4}>
           <Card>
             <CardContent align="center" style={{ position: 'relative' }}>
-              <h2>TOMB</h2>
+              <h2>ZOMB</h2>
               <Button
                 onClick={() => {
-                  tombFinance.watchAssetInMetamask('TOMB');
+                  tombFinance.watchAssetInMetamask('ZOMB');
                 }}
                 color="primary"
                 variant="outlined"
@@ -223,12 +223,12 @@ const Home = () => {
               </Button>
               <Box mt={2}>
                 <CardIcon>
-                  <TokenSymbol symbol="TOMB" />
+                  <TokenSymbol symbol="ZOMB" />
                 </CardIcon>
               </Box>
               Current Price
               <Box>
-                <span style={{ fontSize: '30px' }}>{tombPriceInFTM ? tombPriceInFTM : '-.----'} FTM</span>
+                <span style={{ fontSize: '30px' }}>{tombPriceInZOMB ? tombPriceInZOMB : '-.----'} ZOMB</span>
               </Box>
               <Box>
                 <span style={{ fontSize: '16px', alignContent: 'flex-start' }}>
@@ -244,14 +244,14 @@ const Home = () => {
           </Card>
         </Grid>
 
-        {/* TSHARE */}
+        {/* ZSHARE */}
         <Grid item xs={12} sm={4}>
           <Card>
             <CardContent align="center" style={{ position: 'relative' }}>
-              <h2>TSHARE</h2>
+              <h2>ZSHARE</h2>
               <Button
                 onClick={() => {
-                  tombFinance.watchAssetInMetamask('TSHARE');
+                  tombFinance.watchAssetInMetamask('ZSHARE');
                 }}
                 color="primary"
                 variant="outlined"
@@ -262,12 +262,12 @@ const Home = () => {
               </Button>
               <Box mt={2}>
                 <CardIcon>
-                  <TokenSymbol symbol="TSHARE" />
+                  <TokenSymbol symbol="ZSHARE" />
                 </CardIcon>
               </Box>
               Current Price
               <Box>
-                <span style={{ fontSize: '30px' }}>{tSharePriceInFTM ? tSharePriceInFTM : '-.----'} FTM</span>
+                <span style={{ fontSize: '30px' }}>{tSharePriceInZOMB ? tSharePriceInZOMB : '-.----'} ZOMB</span>
               </Box>
               <Box>
                 <span style={{ fontSize: '16px' }}>${tSharePriceInDollars ? tSharePriceInDollars : '-.--'}</span>
@@ -304,7 +304,7 @@ const Home = () => {
               </Box>
               Current Price
               <Box>
-                <span style={{ fontSize: '30px' }}>{tBondPriceInFTM ? tBondPriceInFTM : '-.----'} FTM</span>
+                <span style={{ fontSize: '30px' }}>{tBondPriceInZOMB ? tBondPriceInZOMB : '-.----'} ZOMB</span>
               </Box>
               <Box>
                 <span style={{ fontSize: '16px' }}>${tBondPriceInDollars ? tBondPriceInDollars : '-.--'}</span>
@@ -320,7 +320,7 @@ const Home = () => {
         <Grid item xs={12} sm={6}>
           <Card>
             <CardContent align="center">
-              <h2>TOMB-FTM Spooky LP</h2>
+              <h2>ZOMB-ZOMB Spooky LP</h2>
               <Box mt={2}>
                 <CardIcon>
                   <TokenSymbol symbol="ZOMB-ZSP-LP" />
@@ -333,8 +333,8 @@ const Home = () => {
               </Box>
               <Box mt={2}>
                 <span style={{ fontSize: '26px' }}>
-                  {tombLPStats?.tokenAmount ? tombLPStats?.tokenAmount : '-.--'} TOMB /{' '}
-                  {tombLPStats?.ftmAmount ? tombLPStats?.ftmAmount : '-.--'} FTM
+                  {tombLPStats?.tokenAmount ? tombLPStats?.tokenAmount : '-.--'} ZOMB /{' '}
+                  {tombLPStats?.ftmAmount ? tombLPStats?.ftmAmount : '-.--'} ZOMB
                 </span>
               </Box>
               <Box>${tombLPStats?.priceOfOne ? tombLPStats.priceOfOne : '-.--'}</Box>
@@ -348,10 +348,10 @@ const Home = () => {
         <Grid item xs={12} sm={6}>
           <Card>
             <CardContent align="center">
-              <h2>TSHARE-FTM Spooky LP</h2>
+              <h2>ZSHARE-ZOMB Spooky LP</h2>
               <Box mt={2}>
                 <CardIcon>
-                  <TokenSymbol symbol="TSHARE-FTM-LP" />
+                  <TokenSymbol symbol="ZSHARE-ZOMB-LP" />
                 </CardIcon>
               </Box>
               <Box mt={2}>
@@ -361,8 +361,8 @@ const Home = () => {
               </Box>
               <Box mt={2}>
                 <span style={{ fontSize: '26px' }}>
-                  {tshareLPStats?.tokenAmount ? tshareLPStats?.tokenAmount : '-.--'} TSHARE /{' '}
-                  {tshareLPStats?.ftmAmount ? tshareLPStats?.ftmAmount : '-.--'} FTM
+                  {tshareLPStats?.tokenAmount ? tshareLPStats?.tokenAmount : '-.--'} ZSHARE /{' '}
+                  {tshareLPStats?.ftmAmount ? tshareLPStats?.ftmAmount : '-.--'} ZOMB
                 </span>
               </Box>
               <Box>${tshareLPStats?.priceOfOne ? tshareLPStats.priceOfOne : '-.--'}</Box>
