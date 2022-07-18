@@ -1,23 +1,23 @@
 import { useEffect, useState } from 'react';
-import useTombFinance from './useTombFinance';
+import useZombFinance from './useZombFinance';
 import useRefresh from './useRefresh';
 
 const useTotalValueLocked = () => {
   const [totalValueLocked, setTotalValueLocked] = useState<Number>(0);
   const { slowRefresh } = useRefresh();
-  const tombFinance = useTombFinance();
+  const zombFinance = useZombFinance();
 
   useEffect(() => {
     async function fetchTVL() {
       try {
-        setTotalValueLocked(await tombFinance.getTotalValueLocked());
+        setTotalValueLocked(await zombFinance.getTotalValueLocked());
       }
       catch(err){
         console.error(err);
       }
     }
     fetchTVL();
-  }, [setTotalValueLocked, tombFinance, slowRefresh]);
+  }, [setTotalValueLocked, zombFinance, slowRefresh]);
 
   return totalValueLocked;
 };

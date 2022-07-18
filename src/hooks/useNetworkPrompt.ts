@@ -19,7 +19,7 @@ const usePromptNetwork = () => {
           chainId: `0x${config.chainId.toString(16)}`,
           chainName: config.networkName,
           nativeCurrency: {
-            name: 'FTM',
+            name: 'ZSP',
             symbol: 'ftm',
             decimals: 18,
           },

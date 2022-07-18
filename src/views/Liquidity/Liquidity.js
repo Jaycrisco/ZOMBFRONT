@@ -4,15 +4,15 @@ import { createGlobalStyle } from 'styled-components';
 import HomeImage from '../../assets/img/home.png';
 import useLpStats from '../../hooks/useLpStats';
 import { Box, Button, Grid, Paper, Typography } from '@material-ui/core';
-import useTombStats from '../../hooks/useTombStats';
+import useZombStats from '../../hooks/useZombStats';
 import TokenInput from '../../components/TokenInput';
-import useTombFinance from '../../hooks/useTombFinance';
+import useZombFinance from '../../hooks/useZombFinance';
 import { useWallet } from 'use-wallet';
 import useTokenBalance from '../../hooks/useTokenBalance';
 import { getDisplayBalance } from '../../utils/formatBalance';
 import useApproveTaxOffice from '../../hooks/useApproveTaxOffice';
 import { ApprovalState } from '../../hooks/useApprove';
-import useProvideTombFtmLP from '../../hooks/useProvideTombFtmLP';
+import useProvideZombFtmLP from '../../hooks/useProvideZombFtmLP';
 import { Alert } from '@material-ui/lab';
 
 const BackgroundImage = createGlobalStyle`
@@ -26,32 +26,32 @@ function isNumeric(n) {
 }
 
 const ProvideLiquidity = () => {
-  const [tombAmount, setTombAmount] = useState(0);
+  const [zombAmount, setZombAmount] = useState(0);
   const [ftmAmount, setFtmAmount] = useState(0);
   const [lpTokensAmount, setLpTokensAmount] = useState(0);
   const { balance } = useWallet();
-  const tombStats = useTombStats();
-  const tombFinance = useTombFinance();
+  const zombStats = useZombStats();
+  const zombFinance = useZombFinance();
   const [approveTaxOfficeStatus, approveTaxOffice] = useApproveTaxOffice();
-  const tombBalance = useTokenBalance(tombFinance.TOMB);
+  const zombBalance = useTokenBalance(zombFinance.ZOMB);
   const ftmBalance = (balance / 1e18).toFixed(4);
-  const { onProvideTombFtmLP } = useProvideTombFtmLP();
-  const tombFtmLpStats = useLpStats('TOMB-FTM-LP');
+  const { onProvideZombFtmLP } = useProvideZombFtmLP();
+  const zombFtmLpStats = useLpStats('ZOMB-ZSP-LP');
 
-  const tombLPStats = useMemo(() => (tombFtmLpStats ? tombFtmLpStats : null), [tombFtmLpStats]);
-  const tombPriceInFTM = useMemo(() => (tombStats ? Number(tombStats.tokenInFtm).toFixed(2) : null), [tombStats]);
-  const ftmPriceInTOMB = useMemo(() => (tombStats ? Number(1 / tombStats.tokenInFtm).toFixed(2) : null), [tombStats]);
+  const zombLPStats = useMemo(() => (zombFtmLpStats ? zombFtmLpStats : null), [zombFtmLpStats]);
+  const zombPriceInZSP = useMemo(() => (zombStats ? Number(zombStats.tokenInFtm).toFixed(2) : null), [zombStats]);
+  const ftmPriceInZOMB = useMemo(() => (zombStats ? Number(1 / zombStats.tokenInFtm).toFixed(2) : null), [zombStats]);
   // const classes = useStyles();
 
-  const handleTombChange = async (e) => {
+  const handleZombChange = async (e) => {
     if (e.currentTarget.value === '' || e.currentTarget.value === 0) {
-      setTombAmount(e.currentTarget.value);
+      setZombAmount(e.currentTarget.value);
     }
     if (!isNumeric(e.currentTarget.value)) return;
-    setTombAmount(e.currentTarget.value);
-    const quoteFromSpooky = await tombFinance.quoteFromSpooky(e.currentTarget.value, 'TOMB');
+    setZombAmount(e.currentTarget.value);
+    const quoteFromSpooky = await zombFinance.quoteFromSpooky(e.currentTarget.value, 'ZOMB');
     setFtmAmount(quoteFromSpooky);
-    setLpTokensAmount(quoteFromSpooky / tombLPStats.ftmAmount);
+    setLpTokensAmount(quoteFromSpooky / zombLPStats.ftmAmount);
   };
 
   const handleFtmChange = async (e) => {
@@ -60,22 +60,22 @@ const ProvideLiquidity = () => {
     }
     if (!isNumeric(e.currentTarget.value)) return;
     setFtmAmount(e.currentTarget.value);
-    const quoteFromSpooky = await tombFinance.quoteFromSpooky(e.currentTarget.value, 'FTM');
-    setTombAmount(quoteFromSpooky);
+    const quoteFromSpooky = await zombFinance.quoteFromSpooky(e.currentTarget.value, 'ZSP');
+    setZombAmount(quoteFromSpooky);
 
-    setLpTokensAmount(quoteFromSpooky / tombLPStats.tokenAmount);
+    setLpTokensAmount(quoteFromSpooky / zombLPStats.tokenAmount);
   };
-  const handleTombSelectMax = async () => {
-    const quoteFromSpooky = await tombFinance.quoteFromSpooky(getDisplayBalance(tombBalance), 'TOMB');
-    setTombAmount(getDisplayBalance(tombBalance));
+  const handleZombSelectMax = async () => {
+    const quoteFromSpooky = await zombFinance.quoteFromSpooky(getDisplayBalance(zombBalance), 'ZOMB');
+    setZombAmount(getDisplayBalance(zombBalance));
     setFtmAmount(quoteFromSpooky);
-    setLpTokensAmount(quoteFromSpooky / tombLPStats.ftmAmount);
+    setLpTokensAmount(quoteFromSpooky / zombLPStats.ftmAmount);
   };
   const handleFtmSelectMax = async () => {
-    const quoteFromSpooky = await tombFinance.quoteFromSpooky(ftmBalance, 'FTM');
+    const quoteFromSpooky = await zombFinance.quoteFromSpooky(ftmBalance, 'ZSP');
     setFtmAmount(ftmBalance);
-    setTombAmount(quoteFromSpooky);
-    setLpTokensAmount(ftmBalance / tombLPStats.ftmAmount);
+    setZombAmount(quoteFromSpooky);
+    setLpTokensAmount(ftmBalance / zombLPStats.ftmAmount);
   };
   return (
     <Page>
@@ -87,7 +87,7 @@ const ProvideLiquidity = () => {
       <Grid container justify="center">
         <Box style={{ width: '600px' }}>
           <Alert variant="filled" severity="warning" style={{ marginBottom: '10px' }}>
-            <b>This and <a href="https://spookyswap.finance/"  rel="noopener noreferrer" target="_blank">Spookyswap</a> are the only ways to provide Liquidity on TOMB-FTM pair without paying tax.</b>
+            <b>This and <a href="https://spookyswap.finance/"  rel="noopener noreferrer" target="_blank">Spookyswap</a> are the only ways to provide Liquidity on ZOMB-ZSP pair without paying tax.</b>
           </Alert>
           <Grid item xs={12} sm={12}>
             <Paper>
@@ -97,11 +97,11 @@ const ProvideLiquidity = () => {
                     <Grid container>
                       <Grid item xs={12}>
                         <TokenInput
-                          onSelectMax={handleTombSelectMax}
-                          onChange={handleTombChange}
-                          value={tombAmount}
-                          max={getDisplayBalance(tombBalance)}
-                          symbol={'TOMB'}
+                          onSelectMax={handleZombSelectMax}
+                          onChange={handleZombChange}
+                          value={zombAmount}
+                          max={getDisplayBalance(zombBalance)}
+                          symbol={'ZOMB'}
                         ></TokenInput>
                       </Grid>
                       <Grid item xs={12}>
@@ -110,19 +110,19 @@ const ProvideLiquidity = () => {
                           onChange={handleFtmChange}
                           value={ftmAmount}
                           max={ftmBalance}
-                          symbol={'FTM'}
+                          symbol={'ZSP'}
                         ></TokenInput>
                       </Grid>
                       <Grid item xs={12}>
-                        <p>1 TOMB = {tombPriceInFTM} FTM</p>
-                        <p>1 FTM = {ftmPriceInTOMB} TOMB</p>
+                        <p>1 ZOMB = {zombPriceInZSP} ZSP</p>
+                        <p>1 ZSP = {ftmPriceInZOMB} ZOMB</p>
                         <p>LP tokens ≈ {lpTokensAmount.toFixed(2)}</p>
                       </Grid>
                       <Grid xs={12} justifyContent="center" style={{ textAlign: 'center' }}>
                         {approveTaxOfficeStatus === ApprovalState.APPROVED ? (
                           <Button
                             variant="contained"
-                            onClick={() => onProvideTombFtmLP(ftmAmount.toString(), tombAmount.toString())}
+                            onClick={() => onProvideZombFtmLP(ftmAmount.toString(), zombAmount.toString())}
                             color="primary"
                             style={{ margin: '0 10px', color: '#fff' }}
                           >

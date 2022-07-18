@@ -45,14 +45,14 @@ const Footer = () => {
             <Typography variant="body2" color="textSecondary" align="left">
               {'Copyright © '}
               <Link color="inherit" href="/">
-                Tomb Finance
+                Zomb Finance
               </Link>{' '}
               {new Date().getFullYear()}
             </Typography>
           </Grid>
           <Grid item xs={6} style={{ textAlign: 'right' }}>
             <a
-              href="https://twitter.com/tombfinance"
+              href="https://twitter.com/zombfinance"
               rel="noopener noreferrer"
               target="_blank"
               className={classes.link}
@@ -60,14 +60,14 @@ const Footer = () => {
               <img alt="twitter" src={TwitterImage} className={classes.img} />
             </a>
             <a
-              href="https://github.com/tombfinance/tombfinance-frontend"
+              href="https://github.com/zombfinance/zombfinance-frontend"
               rel="noopener noreferrer"
               target="_blank"
               className={classes.link}
             >
               <img alt="github" src={GithubImage} className={classes.img} />
             </a>
-            <a href="https://t.me/tombfinance" rel="noopener noreferrer" target="_blank" className={classes.link}>
+            <a href="https://t.me/zombfinance" rel="noopener noreferrer" target="_blank" className={classes.link}>
               <img alt="telegram" src={TelegramImage} className={classes.img} />
             </a>
             <a
@@ -78,7 +78,7 @@ const Footer = () => {
             >
               <img alt="youtube" src={YoutubeImage} className={classes.img} />
             </a>
-            <a href="http://discord.tomb.finance/" rel="noopener noreferrer" target="_blank" className={classes.link}>
+            <a href="http://discord.zomb.finance/" rel="noopener noreferrer" target="_blank" className={classes.link}>
               <img alt="discord" src={DiscordImage} className={classes.img} />
             </a>
           </Grid>

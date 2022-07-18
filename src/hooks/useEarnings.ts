@@ -1,18 +1,18 @@
 import { useCallback, useEffect, useState } from 'react';
 import { BigNumber } from 'ethers';
-import useTombFinance from './useTombFinance';
-import { ContractName } from '../tomb-finance';
+import useZombFinance from './useZombFinance';
+import { ContractName } from '../zomb-finance';
 import config from '../config';
 
 const useEarnings = (poolName: ContractName, earnTokenName: String, poolId: Number) => {
   const [balance, setBalance] = useState(BigNumber.from(0));
-  const tombFinance = useTombFinance();
-  const isUnlocked = tombFinance?.isUnlocked;
+  const zombFinance = useZombFinance();
+  const isUnlocked = zombFinance?.isUnlocked;
 
   const fetchBalance = useCallback(async () => {
-    const balance = await tombFinance.earnedFromBank(poolName, earnTokenName, poolId, tombFinance.myAccount);
+    const balance = await zombFinance.earnedFromBank(poolName, earnTokenName, poolId, zombFinance.myAccount);
     setBalance(balance);
-  }, [poolName, earnTokenName, poolId, tombFinance]);
+  }, [poolName, earnTokenName, poolId, zombFinance]);
 
   useEffect(() => {
     if (isUnlocked) {
@@ -21,7 +21,7 @@ const useEarnings = (poolName: ContractName, earnTokenName: String, poolId: Numb
       const refreshBalance = setInterval(fetchBalance, config.refreshInterval);
       return () => clearInterval(refreshBalance);
     }
-  }, [isUnlocked, poolName, tombFinance, fetchBalance]);
+  }, [isUnlocked, poolName, zombFinance, fetchBalance]);
 
   return balance;
 };

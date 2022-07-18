@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import useTombFinance from '../useTombFinance';
+import useZombFinance from '../useZombFinance';
 import { useWallet } from 'use-wallet';
 import { BigNumber } from 'ethers';
 import { parseUnits } from 'ethers/lib/utils';
@@ -7,11 +7,11 @@ import { parseUnits } from 'ethers/lib/utils';
 const useEstimateTShare = (tbondAmount: string) => {
   const [estimateAmount, setEstimateAmount] = useState<string>('');
   const { account } = useWallet();
-  const tombFinance = useTombFinance();
+  const zombFinance = useZombFinance();
 
   const estimateAmountOfTShare = useCallback(async () => {
     const tbondAmountBn = parseUnits(tbondAmount);
-    const amount = await tombFinance.estimateAmountOfTShare(tbondAmountBn.toString());
+    const amount = await zombFinance.estimateAmountOfTShare(tbondAmountBn.toString());
     setEstimateAmount(amount);
   }, [account]);
 

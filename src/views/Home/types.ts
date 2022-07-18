@@ -1,4 +1,4 @@
-import { TokenStat } from '../../tomb-finance/types';
+import { TokenStat } from '../../zomb-finance/types';
 
 export interface OverviewData {
   cash?: TokenStat;

@@ -1,18 +1,18 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import useTombFinance from './useTombFinance';
+import useZombFinance from './useZombFinance';
 import config from '../config';
-import ERC20 from '../tomb-finance/ERC20';
+import ERC20 from '../zomb-finance/ERC20';
 
 const useStakedTokenPriceInDollars = (stakedTokenName: string, stakedToken: ERC20) => {
   const [stakedTokenPriceInDollars, setStakedTokenPriceInDollars] = useState('0');
-  const tombFinance = useTombFinance();
-  const isUnlocked = tombFinance?.isUnlocked;
+  const zombFinance = useZombFinance();
+  const isUnlocked = zombFinance?.isUnlocked;
 
   const fetchBalance = useCallback(async () => {
-    const balance = await tombFinance.getDepositTokenPriceInDollars(stakedTokenName, stakedToken);
+    const balance = await zombFinance.getDepositTokenPriceInDollars(stakedTokenName, stakedToken);
     setStakedTokenPriceInDollars(balance);
-  }, [stakedToken, stakedTokenName, tombFinance]);
+  }, [stakedToken, stakedTokenName, zombFinance]);
 
   useEffect(() => {
     if (isUnlocked) {
@@ -21,7 +21,7 @@ const useStakedTokenPriceInDollars = (stakedTokenName: string, stakedToken: ERC2
       const refreshStakedTokenPriceInDollars = setInterval(fetchBalance, config.refreshInterval);
       return () => clearInterval(refreshStakedTokenPriceInDollars);
     }
-  }, [isUnlocked, setStakedTokenPriceInDollars, tombFinance, fetchBalance]);
+  }, [isUnlocked, setStakedTokenPriceInDollars, zombFinance, fetchBalance]);
 
   return stakedTokenPriceInDollars;
 };
