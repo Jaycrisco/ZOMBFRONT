@@ -12,10 +12,10 @@ import TokenSymbol from '../TokenSymbol';
 const AccountModal: React.FC<ModalProps> = ({ onDismiss }) => {
   const tombFinance = useTombFinance();
 
-  const tombBalance = useTokenBalance(tombFinance.ZOMB);
+  const tombBalance = useTokenBalance(tombFinance.TOMB);
   const displayTombBalance = useMemo(() => getDisplayBalance(tombBalance), [tombBalance]);
 
-  const tshareBalance = useTokenBalance(tombFinance.ZSHARE);
+  const tshareBalance = useTokenBalance(tombFinance.TSHARE);
   const displayTshareBalance = useMemo(() => getDisplayBalance(tshareBalance), [tshareBalance]);
 
   const tbondBalance = useTokenBalance(tombFinance.TBOND);
@@ -27,18 +27,18 @@ const AccountModal: React.FC<ModalProps> = ({ onDismiss }) => {
 
       <Balances>
         <StyledBalanceWrapper>
-          <TokenSymbol symbol="ZOMB" />
+          <TokenSymbol symbol="TOMB" />
           <StyledBalance>
             <StyledValue>{displayTombBalance}</StyledValue>
-            <Label text="ZOMB Available" />
+            <Label text="TOMB Available" />
           </StyledBalance>
         </StyledBalanceWrapper>
 
         <StyledBalanceWrapper>
-          <TokenSymbol symbol="ZSHARE" />
+          <TokenSymbol symbol="TSHARE" />
           <StyledBalance>
             <StyledValue>{displayTshareBalance}</StyledValue>
-            <Label text="ZSHARE Available" />
+            <Label text="TSHARE Available" />
           </StyledBalance>
         </StyledBalanceWrapper>
 

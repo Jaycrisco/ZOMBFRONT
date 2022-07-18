@@ -18,17 +18,17 @@ import shibaLogo from '../../assets/img/shiba_logo.svg';
 const logosBySymbol: { [title: string]: string } = {
   //Real tokens
   //=====================
-  ZOMB: tombLogo,
-  ZOMBPNG: tombLogoPNG,
-  ZSHAREPNG: tShareLogoPNG,
-  ZSHARE: tShareLogo,
+  TOMB: tombLogo,
+  TOMBPNG: tombLogoPNG,
+  TSHAREPNG: tShareLogoPNG,
+  TSHARE: tShareLogo,
   TBOND: tBondLogo,
-  ZOMB: wftmLogo,
+  WFTM: wftmLogo,
   BOO: booLogo,
   SHIBA: shibaLogo,
   ZOO: zooLogo,
   'ZOMB-ZSP-LP': tombFtmLpLogo,
-  'ZSHARE-ZOMB-LP': tshareFtmLpLogo,
+  'TSHARE-FTM-LP': tshareFtmLpLogo,
 };
 
 type LogoProps = {

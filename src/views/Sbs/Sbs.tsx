@@ -132,7 +132,7 @@ const Sbs: React.FC = () => {
                             <StyledExchanger>
                               <StyledToken>
                                 <StyledCardIcon>
-                                  <TokenSymbol symbol={tombFinance.ZSHARE.symbol} size={54} />
+                                  <TokenSymbol symbol={tombFinance.TSHARE.symbol} size={54} />
                                 </StyledCardIcon>
                               </StyledToken>
                             </StyledExchanger>
@@ -145,7 +145,7 @@ const Sbs: React.FC = () => {
                                 symbol="TShare"
                               ></TokenInput>
                             </Grid>
-                            <StyledDesc>{`${tshareBalance} ZSHARE Available in Swapper`}</StyledDesc>
+                            <StyledDesc>{`${tshareBalance} TSHARE Available in Swapper`}</StyledDesc>
                           </StyledCardContentInner>
                         </CardContent>
                       </Card>

@@ -32,13 +32,13 @@ import useWithdrawFromMasonry from '../../../hooks/useWithdrawFromMasonry';
 
 const Stake: React.FC = () => {
   const tombFinance = useTombFinance();
-  const [approveStatus, approve] = useApprove(tombFinance.ZSHARE, tombFinance.contracts.Masonry.address);
+  const [approveStatus, approve] = useApprove(tombFinance.TSHARE, tombFinance.contracts.Masonry.address);
 
-  const tokenBalance = useTokenBalance(tombFinance.ZSHARE);
+  const tokenBalance = useTokenBalance(tombFinance.TSHARE);
   const stakedBalance = useStakedBalanceOnMasonry();
   const { from, to } = useUnstakeTimerMasonry();
 
-  const stakedTokenPriceInDollars = useStakedTokenPriceInDollars('ZSHARE', tombFinance.ZSHARE);
+  const stakedTokenPriceInDollars = useStakedTokenPriceInDollars('TSHARE', tombFinance.TSHARE);
   const tokenPriceInDollars = useMemo(
     () =>
       stakedTokenPriceInDollars
@@ -81,11 +81,11 @@ const Stake: React.FC = () => {
           <StyledCardContentInner>
             <StyledCardHeader>
               <CardIcon>
-                <TokenSymbol symbol="ZSHARE" />
+                <TokenSymbol symbol="TSHARE" />
               </CardIcon>
               <Value value={getDisplayBalance(stakedBalance)} />
               <Label text={`≈ $${tokenPriceInDollars}`} />
-              <Label text={'ZSHARE Staked'} />
+              <Label text={'TSHARE Staked'} />
             </StyledCardHeader>
             <StyledCardActions>
               {approveStatus !== ApprovalState.APPROVED ? (
@@ -96,7 +96,7 @@ const Stake: React.FC = () => {
                   style={{ marginTop: '20px' }}
                   onClick={approve}
                 >
-                  Approve ZSHARE
+                  Approve TSHARE
                 </Button>
               ) : (
                 <>

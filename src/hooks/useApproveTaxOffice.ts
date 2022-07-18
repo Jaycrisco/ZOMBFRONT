@@ -19,17 +19,17 @@ export enum ApprovalState {
 // returns a variable indicating the state of the approval and a function which approves if necessary or early returns
 function useApproveTaxOffice(): [ApprovalState, () => Promise<void>] {
   const tombFinance = useTombFinance();
-  let token: ERC20 = tombFinance.ZOMB;
-  // if (zappingToken === ZOMB_TICKER) token = tombFinance.ZOMB;
-  // else if (zappingToken === ZOMB_TICKER) token = tombFinance.ZOMB;
-  // else if (zappingToken === ZSHARE_TICKER) token = tombFinance.ZSHARE;
+  let token: ERC20 = tombFinance.TOMB;
+  // if (zappingToken === FTM_TICKER) token = tombFinance.FTM;
+  // else if (zappingToken === TOMB_TICKER) token = tombFinance.TOMB;
+  // else if (zappingToken === TSHARE_TICKER) token = tombFinance.TSHARE;
   const pendingApproval = useHasPendingApproval(token.address, TAX_OFFICE_ADDR);
   const currentAllowance = useAllowance(token, TAX_OFFICE_ADDR, pendingApproval);
 
   // check the current approval status
   const approvalState: ApprovalState = useMemo(() => {
     // we might not have enough data to know whether or not we need to approve
-    if (token === tombFinance.ZOMB) return ApprovalState.APPROVED;
+    if (token === tombFinance.FTM) return ApprovalState.APPROVED;
     if (!currentAllowance) return ApprovalState.UNKNOWN;
 
     // amountToApprove will be defined if currentAllowance is
