@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
   const classes = useStyles();
   const TVL = useTotalValueLocked();
-  const tombFtmLpStats = useLpStats('TOMB-FTM-LP');
+  const tombFtmLpStats = useLpStats('ZOMB-ZSP-LP');
   const tShareFtmLpStats = useLpStats('TSHARE-FTM-LP');
   const tombStats = useTombStats();
   const tShareStats = usetShareStats();
@@ -100,7 +100,7 @@ const Home = () => {
   );
   const tBondTotalSupply = useMemo(() => (tBondStats ? String(tBondStats.totalSupply) : null), [tBondStats]);
 
-  const tombLpZap = useZap({ depositTokenName: 'TOMB-FTM-LP' });
+  const tombLpZap = useZap({ depositTokenName: 'ZOMB-ZSP-LP' });
   const tshareLpZap = useZap({ depositTokenName: 'TSHARE-FTM-LP' });
 
   const StyledLink = styled.a`
@@ -116,7 +116,7 @@ const Home = () => {
         tombLpZap.onZap(zappingToken, tokenName, amount);
         onDissmissTombZap();
       }}
-      tokenName={'TOMB-FTM-LP'}
+      tokenName={'ZOMB-ZSP-LP'}
     />,
   );
 
@@ -323,7 +323,7 @@ const Home = () => {
               <h2>TOMB-FTM Spooky LP</h2>
               <Box mt={2}>
                 <CardIcon>
-                  <TokenSymbol symbol="TOMB-FTM-LP" />
+                  <TokenSymbol symbol="ZOMB-ZSP-LP" />
                 </CardIcon>
               </Box>
               <Box mt={2}>
