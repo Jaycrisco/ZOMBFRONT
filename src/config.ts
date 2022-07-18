@@ -38,7 +38,7 @@ const configurations: { [env: string]: Configuration } = {
       ZOO: ['0x09e145a1d53c0045f41aeef25d8ff982ae74dd56', 0],
       SHIBA: ['0x9ba3e4f84a34df4e08c112e1a0ff148b81655615', 9],
       'USDT-FTM-LP': ['0x2b4C76d0dc16BE1C31D4C1DC53bF9B45987Fc75c', 18],
-      'TOMB-FTM-LP': ['0x2A651563C9d3Af67aE0388a5c8F89b867038089e', 18],
+      'ZOMB-ZSP-LP': ['0xE9Fd98DEa3F4Bdab7A4b1F03117F3F44955aA8c5', 18],
       'TSHARE-FTM-LP': ['0x4733bc45eF91cF7CcEcaeeDb794727075fB209F2', 18],
     },
     baseLaunchDate: new Date('2021-06-02 13:00:00Z'),
