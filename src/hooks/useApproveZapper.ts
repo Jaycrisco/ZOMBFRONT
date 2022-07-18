@@ -2,9 +2,9 @@ import { BigNumber, ethers } from 'ethers';
 import { useCallback, useMemo } from 'react';
 import { useHasPendingApproval, useTransactionAdder } from '../state/transactions/hooks';
 import useAllowance from './useAllowance';
-import ERC20 from '../zomb-finance/ERC20';
-import { ZSP_TICKER, ZOMB_TICKER, ZSHARE_TICKER, ZAPPER_ROUTER_ADDR } from '../utils/constants';
-import useZombFinance from './useZombFinance';
+import ERC20 from '../tomb-finance/ERC20';
+import { FTM_TICKER, TOMB_TICKER, TSHARE_TICKER, ZAPPER_ROUTER_ADDR } from '../utils/constants';
+import useTombFinance from './useTombFinance';
 
 const APPROVE_AMOUNT = ethers.constants.MaxUint256;
 const APPROVE_BASE_AMOUNT = BigNumber.from('1000000000000000000000000');
@@ -18,18 +18,18 @@ export enum ApprovalState {
 
 // returns a variable indicating the state of the approval and a function which approves if necessary or early returns
 function useApproveZapper(zappingToken: string): [ApprovalState, () => Promise<void>] {
-  const zombFinance = useZombFinance();
+  const tombFinance = useTombFinance();
   let token: ERC20;
-  if (zappingToken === ZSP_TICKER) token = zombFinance.ZSP;
-  else if (zappingToken === ZOMB_TICKER) token = zombFinance.ZOMB;
-  else if (zappingToken === ZSHARE_TICKER) token = zombFinance.ZSHARE;
+  if (zappingToken === FTM_TICKER) token = tombFinance.FTM;
+  else if (zappingToken === TOMB_TICKER) token = tombFinance.TOMB;
+  else if (zappingToken === TSHARE_TICKER) token = tombFinance.TSHARE;
   const pendingApproval = useHasPendingApproval(token.address, ZAPPER_ROUTER_ADDR);
   const currentAllowance = useAllowance(token, ZAPPER_ROUTER_ADDR, pendingApproval);
 
   // check the current approval status
   const approvalState: ApprovalState = useMemo(() => {
     // we might not have enough data to know whether or not we need to approve
-    if (token === zombFinance.ZSP) return ApprovalState.APPROVED;
+    if (token === tombFinance.FTM) return ApprovalState.APPROVED;
     if (!currentAllowance) return ApprovalState.UNKNOWN;
 
     // amountToApprove will be defined if currentAllowance is
@@ -38,7 +38,7 @@ function useApproveZapper(zappingToken: string): [ApprovalState, () => Promise<v
         ? ApprovalState.PENDING
         : ApprovalState.NOT_APPROVED
       : ApprovalState.APPROVED;
-  }, [currentAllowance, pendingApproval, token, zombFinance]);
+  }, [currentAllowance, pendingApproval, token, tombFinance]);
 
   const addTransaction = useTransactionAdder();
 

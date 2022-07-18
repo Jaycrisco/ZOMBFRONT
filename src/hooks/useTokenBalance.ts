@@ -1,17 +1,17 @@
 import { useCallback, useEffect, useState } from 'react';
 import { BigNumber } from 'ethers';
-import ERC20 from '../zomb-finance/ERC20';
-import useZombFinance from './useZombFinance';
+import ERC20 from '../tomb-finance/ERC20';
+import useTombFinance from './useTombFinance';
 import config from '../config';
 
 const useTokenBalance = (token: ERC20) => {
   const [balance, setBalance] = useState(BigNumber.from(0));
-  const zombFinance = useZombFinance();
-  const isUnlocked = zombFinance?.isUnlocked;
+  const tombFinance = useTombFinance();
+  const isUnlocked = tombFinance?.isUnlocked;
 
   const fetchBalance = useCallback(async () => {
-    setBalance(await token.balanceOf(zombFinance.myAccount));
-  }, [token, zombFinance.myAccount]);
+    setBalance(await token.balanceOf(tombFinance.myAccount));
+  }, [token, tombFinance.myAccount]);
 
   useEffect(() => {
     if (isUnlocked) {
@@ -19,7 +19,7 @@ const useTokenBalance = (token: ERC20) => {
       let refreshInterval = setInterval(fetchBalance, config.refreshInterval);
       return () => clearInterval(refreshInterval);
     }
-  }, [isUnlocked, token, fetchBalance, zombFinance]);
+  }, [isUnlocked, token, fetchBalance, tombFinance]);
 
   return balance;
 };

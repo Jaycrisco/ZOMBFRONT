@@ -9,7 +9,7 @@ import PageHeader from '../../components/PageHeader';
 import { Box,/* Paper, Typography,*/ Button, Grid } from '@material-ui/core';
 import styled from 'styled-components';
 import Spacer from '../../components/Spacer';
-import useZombFinance from '../../hooks/useZombFinance';
+import useTombFinance from '../../hooks/useTombFinance';
 import { getDisplayBalance/*, getBalance*/ } from '../../utils/formatBalance';
 import { BigNumber/*, ethers*/ } from 'ethers';
 import useSwapTBondToTShare from '../../hooks/TShareSwapper/useSwapTBondToTShare';
@@ -34,53 +34,53 @@ function isNumeric(n: any) {
 const Sbs: React.FC = () => {
   const { path } = useRouteMatch();
   const { account } = useWallet();
-  const zombFinance = useZombFinance();
+  const tombFinance = useTombFinance();
   const [tbondAmount, setTbondAmount] = useState('');
-  const [zshareAmount, setZshareAmount] = useState('');
+  const [tshareAmount, setTshareAmount] = useState('');
 
-  const [approveStatus, approve] = useApprove(zombFinance.TBOND, zombFinance.contracts.TShareSwapper.address);
+  const [approveStatus, approve] = useApprove(tombFinance.TBOND, tombFinance.contracts.TShareSwapper.address);
   const { onSwapTShare } = useSwapTBondToTShare();
-  const zshareSwapperStat = useTShareSwapperStats(account);
+  const tshareSwapperStat = useTShareSwapperStats(account);
 
-  const zshareBalance = useMemo(() => (zshareSwapperStat ? Number(zshareSwapperStat.zshareBalance) : 0), [zshareSwapperStat]);
-  const bondBalance = useMemo(() => (zshareSwapperStat ? Number(zshareSwapperStat.tbondBalance) : 0), [zshareSwapperStat]);
+  const tshareBalance = useMemo(() => (tshareSwapperStat ? Number(tshareSwapperStat.tshareBalance) : 0), [tshareSwapperStat]);
+  const bondBalance = useMemo(() => (tshareSwapperStat ? Number(tshareSwapperStat.tbondBalance) : 0), [tshareSwapperStat]);
 
   const handleTBondChange = async (e: any) => {
     if (e.currentTarget.value === '') {
       setTbondAmount('');
-      setZshareAmount('');
+      setTshareAmount('');
       return
     }
     if (!isNumeric(e.currentTarget.value)) return;
     setTbondAmount(e.currentTarget.value);
-    const updateTShareAmount = await zombFinance.estimateAmountOfTShare(e.currentTarget.value);
-    setZshareAmount(updateTShareAmount);  
+    const updateTShareAmount = await tombFinance.estimateAmountOfTShare(e.currentTarget.value);
+    setTshareAmount(updateTShareAmount);  
   };
 
   const handleTBondSelectMax = async () => {
     setTbondAmount(String(bondBalance));
-    const updateTShareAmount = await zombFinance.estimateAmountOfTShare(String(bondBalance));
-    setZshareAmount(updateTShareAmount); 
+    const updateTShareAmount = await tombFinance.estimateAmountOfTShare(String(bondBalance));
+    setTshareAmount(updateTShareAmount); 
   };
 
   const handleTShareSelectMax = async () => {
-    setZshareAmount(String(zshareBalance));
-    const rateTSharePerZomb = (await zombFinance.getTShareSwapperStat(account)).rateTSharePerZomb;
-    const updateTBondAmount = ((BigNumber.from(10).pow(30)).div(BigNumber.from(rateTSharePerZomb))).mul(Number(zshareBalance) * 1e6);
+    setTshareAmount(String(tshareBalance));
+    const rateTSharePerTomb = (await tombFinance.getTShareSwapperStat(account)).rateTSharePerTomb;
+    const updateTBondAmount = ((BigNumber.from(10).pow(30)).div(BigNumber.from(rateTSharePerTomb))).mul(Number(tshareBalance) * 1e6);
     setTbondAmount(getDisplayBalance(updateTBondAmount, 18, 6));
   };
 
   const handleTShareChange = async (e: any) => {
     const inputData = e.currentTarget.value;
     if (inputData === '') {
-      setZshareAmount('');
+      setTshareAmount('');
       setTbondAmount('');
       return
     }
     if (!isNumeric(inputData)) return;
-    setZshareAmount(inputData);
-    const rateTSharePerZomb = (await zombFinance.getTShareSwapperStat(account)).rateTSharePerZomb;
-    const updateTBondAmount = ((BigNumber.from(10).pow(30)).div(BigNumber.from(rateTSharePerZomb))).mul(Number(inputData) * 1e6);
+    setTshareAmount(inputData);
+    const rateTSharePerTomb = (await tombFinance.getTShareSwapperStat(account)).rateTSharePerTomb;
+    const updateTBondAmount = ((BigNumber.from(10).pow(30)).div(BigNumber.from(rateTSharePerTomb))).mul(Number(inputData) * 1e6);
     setTbondAmount(getDisplayBalance(updateTBondAmount, 18, 6));
   }
 
@@ -105,7 +105,7 @@ const Sbs: React.FC = () => {
                             <StyledExchanger>
                               <StyledToken>
                                 <StyledCardIcon>
-                                  <TokenSymbol symbol={zombFinance.TBOND.symbol} size={54} />
+                                  <TokenSymbol symbol={tombFinance.TBOND.symbol} size={54} />
                                 </StyledCardIcon>
                               </StyledToken>
                             </StyledExchanger>
@@ -132,7 +132,7 @@ const Sbs: React.FC = () => {
                             <StyledExchanger>
                               <StyledToken>
                                 <StyledCardIcon>
-                                  <TokenSymbol symbol={zombFinance.ZSHARE.symbol} size={54} />
+                                  <TokenSymbol symbol={tombFinance.TSHARE.symbol} size={54} />
                                 </StyledCardIcon>
                               </StyledToken>
                             </StyledExchanger>
@@ -140,12 +140,12 @@ const Sbs: React.FC = () => {
                               <TokenInput
                                 onSelectMax={handleTShareSelectMax}
                                 onChange={handleTShareChange}
-                                value={zshareAmount}
-                                max={zshareBalance}
+                                value={tshareAmount}
+                                max={tshareBalance}
                                 symbol="TShare"
                               ></TokenInput>
                             </Grid>
-                            <StyledDesc>{`${zshareBalance} ZSHARE Available in Swapper`}</StyledDesc>
+                            <StyledDesc>{`${tshareBalance} TSHARE Available in Swapper`}</StyledDesc>
                           </StyledCardContentInner>
                         </CardContent>
                       </Card>

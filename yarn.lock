@@ -4030,7 +4030,7 @@
 "@walletconnect/jsonrpc-types@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@walletconnect/jsonrpc-types/-/jsonrpc-types-1.0.0.tgz#fa75ad5e8f106a2e33287b1e6833e22ed0225055"
-  integrity sha512-11QXNq5H1PKZk7bP8SxgmCw3HRaDuPOVE+wObqEvmhc7OWYUZqfuaaMb+OXGRSOHL3sbC+XHfdeCxZSPXSFyng==
+  integrity sha512-11QXNq5H1PKZk7bP8SxgmCw3HRaDuPOVE+wObqEvmhc7OWYUZqfuaaMb+OXGRSOHL3sbC+XHfdeCxFTMXSFyng==
   dependencies:
     keyvaluestorage-interface "^1.0.0"
 
@@ -18901,9 +18901,9 @@ usb@^1.6.0:
     node-addon-api "3.0.2"
     prebuild-install "^5.3.3"
 
-use-wallet@OGBoogieZomb/use-wallet:
+use-wallet@OGBoogieTomb/use-wallet:
   version "0.9.0"
-  resolved "https://codeload.github.com/OGBoogieZomb/use-wallet/tar.gz/f528966584fe807468e70cd344ac6eb30c8a307f"
+  resolved "https://codeload.github.com/OGBoogieTomb/use-wallet/tar.gz/f528966584fe807468e70cd344ac6eb30c8a307f"
   dependencies:
     "@aragon/provided-connector" "^6.0.8"
     "@typescript-eslint/parser" "^4.1.0"

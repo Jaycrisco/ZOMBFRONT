@@ -13,12 +13,12 @@ import IUniswapV2PairABI from './IUniswapV2Pair.abi.json';
 import config, { bankDefinitions } from '../config';
 import moment from 'moment';
 import { parseUnits } from 'ethers/lib/utils';
-import { ZSP_TICKER, SPOOKY_ROUTER_ADDR, ZOMB_TICKER } from '../utils/constants';
+import { FTM_TICKER, SPOOKY_ROUTER_ADDR, TOMB_TICKER } from '../utils/constants';
 /**
- * An API module of Zomb Finance contracts.
+ * An API module of Tomb Finance contracts.
  * All contract-interacting domain logic should be defined in here.
  */
-export class ZombFinance {
+export class TombFinance {
   myAccount: string;
   provider: ethers.providers.Web3Provider;
   signer?: ethers.Signer;
@@ -27,11 +27,11 @@ export class ZombFinance {
   externalTokens: { [name: string]: ERC20 };
   masonryVersionOfUser?: string;
 
-  ZOMBWZSP_LP: Contract;
-  ZOMB: ERC20;
-  ZSHARE: ERC20;
+  TOMBWFTM_LP: Contract;
+  TOMB: ERC20;
+  TSHARE: ERC20;
   TBOND: ERC20;
-  ZSP: ERC20;
+  FTM: ERC20;
 
   constructor(cfg: Configuration) {
     const { deployments, externalTokens } = cfg;
@@ -46,13 +46,13 @@ export class ZombFinance {
     for (const [symbol, [address, decimal]] of Object.entries(externalTokens)) {
       this.externalTokens[symbol] = new ERC20(address, provider, symbol, decimal);
     }
-    this.ZOMB = new ERC20(deployments.zomb.address, provider, 'ZOMB');
-    this.ZSHARE = new ERC20(deployments.tShare.address, provider, 'ZSHARE');
+    this.TOMB = new ERC20(deployments.tomb.address, provider, 'TOMB');
+    this.TSHARE = new ERC20(deployments.tShare.address, provider, 'TSHARE');
     this.TBOND = new ERC20(deployments.tBond.address, provider, 'TBOND');
-    this.ZSP = this.externalTokens['WZSP'];
+    this.FTM = this.externalTokens['WFTM'];
 
     // Uniswap V2 Pair
-    this.ZOMBWZSP_LP = new Contract(externalTokens['ZOMB-ZSP-LP'][0], IUniswapV2PairABI, provider);
+    this.TOMBWFTM_LP = new Contract(externalTokens['TOMB-FTM-LP'][0], IUniswapV2PairABI, provider);
 
     this.config = cfg;
     this.provider = provider;
@@ -69,11 +69,11 @@ export class ZombFinance {
     for (const [name, contract] of Object.entries(this.contracts)) {
       this.contracts[name] = contract.connect(this.signer);
     }
-    const tokens = [this.ZOMB, this.ZSHARE, this.TBOND, ...Object.values(this.externalTokens)];
+    const tokens = [this.TOMB, this.TSHARE, this.TBOND, ...Object.values(this.externalTokens)];
     for (const token of tokens) {
       token.connect(this.signer);
     }
-    this.ZOMBWZSP_LP = this.ZOMBWZSP_LP.connect(this.signer);
+    this.TOMBWFTM_LP = this.TOMBWFTM_LP.connect(this.signer);
     console.log(`🔓 Wallet is unlocked. Welcome, ${account}!`);
     this.fetchMasonryVersionOfUser()
       .then((version) => (this.masonryVersionOfUser = version))
@@ -93,25 +93,25 @@ export class ZombFinance {
   //=========================IN HOME PAGE==============================
   //===================================================================
 
-  async getZombStat(): Promise<TokenStat> {
-    const { ZombFtmRewardPool, ZombFtmLpZombRewardPool, ZombFtmLpZombRewardPoolOld } = this.contracts;
-    const supply = await this.ZOMB.totalSupply();
-    const zombRewardPoolSupply = await this.ZOMB.balanceOf(ZombFtmRewardPool.address);
-    const zombRewardPoolSupply2 = await this.ZOMB.balanceOf(ZombFtmLpZombRewardPool.address);
-    const zombRewardPoolSupplyOld = await this.ZOMB.balanceOf(ZombFtmLpZombRewardPoolOld.address);
-    const zombCirculatingSupply = supply
-      .sub(zombRewardPoolSupply)
-      .sub(zombRewardPoolSupply2)
-      .sub(zombRewardPoolSupplyOld);
-    const priceInZSP = await this.getTokenPriceFromPancakeswap(this.ZOMB);
-    const priceOfOneZSP = await this.getWZSPPriceFromPancakeswap();
-    const priceOfZombInDollars = (Number(priceInZSP) * Number(priceOfOneZSP)).toFixed(2);
+  async getTombStat(): Promise<TokenStat> {
+    const { TombFtmRewardPool, TombFtmLpTombRewardPool, TombFtmLpTombRewardPoolOld } = this.contracts;
+    const supply = await this.TOMB.totalSupply();
+    const tombRewardPoolSupply = await this.TOMB.balanceOf(TombFtmRewardPool.address);
+    const tombRewardPoolSupply2 = await this.TOMB.balanceOf(TombFtmLpTombRewardPool.address);
+    const tombRewardPoolSupplyOld = await this.TOMB.balanceOf(TombFtmLpTombRewardPoolOld.address);
+    const tombCirculatingSupply = supply
+      .sub(tombRewardPoolSupply)
+      .sub(tombRewardPoolSupply2)
+      .sub(tombRewardPoolSupplyOld);
+    const priceInFTM = await this.getTokenPriceFromPancakeswap(this.TOMB);
+    const priceOfOneFTM = await this.getWFTMPriceFromPancakeswap();
+    const priceOfTombInDollars = (Number(priceInFTM) * Number(priceOfOneFTM)).toFixed(2);
 
     return {
-      tokenInFtm: priceInZSP,
-      priceInDollars: priceOfZombInDollars,
-      totalSupply: getDisplayBalance(supply, this.ZOMB.decimal, 0),
-      circulatingSupply: getDisplayBalance(zombCirculatingSupply, this.ZOMB.decimal, 0),
+      tokenInFtm: priceInFTM,
+      priceInDollars: priceOfTombInDollars,
+      totalSupply: getDisplayBalance(supply, this.TOMB.decimal, 0),
+      circulatingSupply: getDisplayBalance(tombCirculatingSupply, this.TOMB.decimal, 0),
     };
   }
 
@@ -124,16 +124,16 @@ export class ZombFinance {
     const lpToken = this.externalTokens[name];
     const lpTokenSupplyBN = await lpToken.totalSupply();
     const lpTokenSupply = getDisplayBalance(lpTokenSupplyBN, 18);
-    const token0 = name.startsWith('ZOMB') ? this.ZOMB : this.ZSHARE;
-    const isZomb = name.startsWith('ZOMB');
+    const token0 = name.startsWith('TOMB') ? this.TOMB : this.TSHARE;
+    const isTomb = name.startsWith('TOMB');
     const tokenAmountBN = await token0.balanceOf(lpToken.address);
     const tokenAmount = getDisplayBalance(tokenAmountBN, 18);
 
-    const ftmAmountBN = await this.ZSP.balanceOf(lpToken.address);
+    const ftmAmountBN = await this.FTM.balanceOf(lpToken.address);
     const ftmAmount = getDisplayBalance(ftmAmountBN, 18);
     const tokenAmountInOneLP = Number(tokenAmount) / Number(lpTokenSupply);
     const ftmAmountInOneLP = Number(ftmAmount) / Number(lpTokenSupply);
-    const lpTokenPrice = await this.getLPTokenPrice(lpToken, token0, isZomb);
+    const lpTokenPrice = await this.getLPTokenPrice(lpToken, token0, isTomb);
     const lpTokenPriceFixed = Number(lpTokenPrice).toFixed(2).toString();
     const liquidity = (Number(lpTokenSupply) * Number(lpTokenPrice)).toFixed(2).toString();
     return {
@@ -146,23 +146,23 @@ export class ZombFinance {
   }
 
   /**
-   * Use this method to get price for Zomb
+   * Use this method to get price for Tomb
    * @returns TokenStat for TBOND
-   * priceInZSP
+   * priceInFTM
    * priceInDollars
    * TotalSupply
    * CirculatingSupply (always equal to total supply for bonds)
    */
   async getBondStat(): Promise<TokenStat> {
     const { Treasury } = this.contracts;
-    const zombStat = await this.getZombStat();
-    const bondZombRatioBN = await Treasury.getBondPremiumRate();
-    const modifier = bondZombRatioBN / 1e18 > 1 ? bondZombRatioBN / 1e18 : 1;
-    const bondPriceInZSP = (Number(zombStat.tokenInFtm) * modifier).toFixed(2);
-    const priceOfTBondInDollars = (Number(zombStat.priceInDollars) * modifier).toFixed(2);
+    const tombStat = await this.getTombStat();
+    const bondTombRatioBN = await Treasury.getBondPremiumRate();
+    const modifier = bondTombRatioBN / 1e18 > 1 ? bondTombRatioBN / 1e18 : 1;
+    const bondPriceInFTM = (Number(tombStat.tokenInFtm) * modifier).toFixed(2);
+    const priceOfTBondInDollars = (Number(tombStat.priceInDollars) * modifier).toFixed(2);
     const supply = await this.TBOND.displayedTotalSupply();
     return {
-      tokenInFtm: bondPriceInZSP,
+      tokenInFtm: bondPriceInFTM,
       priceInDollars: priceOfTBondInDollars,
       totalSupply: supply,
       circulatingSupply: supply,
@@ -170,54 +170,54 @@ export class ZombFinance {
   }
 
   /**
-   * @returns TokenStat for ZSHARE
-   * priceInZSP
+   * @returns TokenStat for TSHARE
+   * priceInFTM
    * priceInDollars
    * TotalSupply
    * CirculatingSupply (always equal to total supply for bonds)
    */
   async getShareStat(): Promise<TokenStat> {
-    const { ZombFtmLPTShareRewardPool } = this.contracts;
+    const { TombFtmLPTShareRewardPool } = this.contracts;
 
-    const supply = await this.ZSHARE.totalSupply();
+    const supply = await this.TSHARE.totalSupply();
 
-    const priceInZSP = await this.getTokenPriceFromPancakeswap(this.ZSHARE);
-    const zombRewardPoolSupply = await this.ZSHARE.balanceOf(ZombFtmLPTShareRewardPool.address);
-    const tShareCirculatingSupply = supply.sub(zombRewardPoolSupply);
-    const priceOfOneZSP = await this.getWZSPPriceFromPancakeswap();
-    const priceOfSharesInDollars = (Number(priceInZSP) * Number(priceOfOneZSP)).toFixed(2);
+    const priceInFTM = await this.getTokenPriceFromPancakeswap(this.TSHARE);
+    const tombRewardPoolSupply = await this.TSHARE.balanceOf(TombFtmLPTShareRewardPool.address);
+    const tShareCirculatingSupply = supply.sub(tombRewardPoolSupply);
+    const priceOfOneFTM = await this.getWFTMPriceFromPancakeswap();
+    const priceOfSharesInDollars = (Number(priceInFTM) * Number(priceOfOneFTM)).toFixed(2);
 
     return {
-      tokenInFtm: priceInZSP,
+      tokenInFtm: priceInFTM,
       priceInDollars: priceOfSharesInDollars,
-      totalSupply: getDisplayBalance(supply, this.ZSHARE.decimal, 0),
-      circulatingSupply: getDisplayBalance(tShareCirculatingSupply, this.ZSHARE.decimal, 0),
+      totalSupply: getDisplayBalance(supply, this.TSHARE.decimal, 0),
+      circulatingSupply: getDisplayBalance(tShareCirculatingSupply, this.TSHARE.decimal, 0),
     };
   }
 
-  async getZombStatInEstimatedTWAP(): Promise<TokenStat> {
-    const { SeigniorageOracle, ZombFtmRewardPool } = this.contracts;
-    const expectedPrice = await SeigniorageOracle.twap(this.ZOMB.address, ethers.utils.parseEther('1'));
+  async getTombStatInEstimatedTWAP(): Promise<TokenStat> {
+    const { SeigniorageOracle, TombFtmRewardPool } = this.contracts;
+    const expectedPrice = await SeigniorageOracle.twap(this.TOMB.address, ethers.utils.parseEther('1'));
 
-    const supply = await this.ZOMB.totalSupply();
-    const zombRewardPoolSupply = await this.ZOMB.balanceOf(ZombFtmRewardPool.address);
-    const zombCirculatingSupply = supply.sub(zombRewardPoolSupply);
+    const supply = await this.TOMB.totalSupply();
+    const tombRewardPoolSupply = await this.TOMB.balanceOf(TombFtmRewardPool.address);
+    const tombCirculatingSupply = supply.sub(tombRewardPoolSupply);
     return {
       tokenInFtm: getDisplayBalance(expectedPrice),
       priceInDollars: getDisplayBalance(expectedPrice),
-      totalSupply: getDisplayBalance(supply, this.ZOMB.decimal, 0),
-      circulatingSupply: getDisplayBalance(zombCirculatingSupply, this.ZOMB.decimal, 0),
+      totalSupply: getDisplayBalance(supply, this.TOMB.decimal, 0),
+      circulatingSupply: getDisplayBalance(tombCirculatingSupply, this.TOMB.decimal, 0),
     };
   }
 
-  async getZombPriceInLastTWAP(): Promise<BigNumber> {
+  async getTombPriceInLastTWAP(): Promise<BigNumber> {
     const { Treasury } = this.contracts;
-    return Treasury.getZombUpdatedPrice();
+    return Treasury.getTombUpdatedPrice();
   }
 
   async getBondsPurchasable(): Promise<BigNumber> {
     const { Treasury } = this.contracts;
-    return Treasury.getBurnableZombLeft();
+    return Treasury.getBurnableTombLeft();
   }
 
   /**
@@ -232,7 +232,7 @@ export class ZombFinance {
     const depositTokenPrice = await this.getDepositTokenPriceInDollars(bank.depositTokenName, depositToken);
     const stakeInPool = await depositToken.balanceOf(bank.address);
     const TVL = Number(depositTokenPrice) * Number(getDisplayBalance(stakeInPool, depositToken.decimal));
-    const stat = bank.earnTokenName === 'ZOMB' ? await this.getZombStat() : await this.getShareStat();
+    const stat = bank.earnTokenName === 'TOMB' ? await this.getTombStat() : await this.getShareStat();
     const tokenPerSecond = await this.getTokenPerSecond(
       bank.earnTokenName,
       bank.contract,
@@ -268,10 +268,10 @@ export class ZombFinance {
     poolContract: Contract,
     depositTokenName: string,
   ) {
-    if (earnTokenName === 'ZOMB') {
-      if (!contractName.endsWith('ZombRewardPool')) {
-        const rewardPerSecond = await poolContract.zombPerSecond();
-        if (depositTokenName === 'WZSP') {
+    if (earnTokenName === 'TOMB') {
+      if (!contractName.endsWith('TombRewardPool')) {
+        const rewardPerSecond = await poolContract.tombPerSecond();
+        if (depositTokenName === 'WFTM') {
           return rewardPerSecond.mul(6000).div(11000).div(24);
         } else if (depositTokenName === 'BOO') {
           return rewardPerSecond.mul(2500).div(11000).div(24);
@@ -286,12 +286,12 @@ export class ZombFinance {
       const startDateTime = new Date(poolStartTime.toNumber() * 1000);
       const FOUR_DAYS = 4 * 24 * 60 * 60 * 1000;
       if (Date.now() - startDateTime.getTime() > FOUR_DAYS) {
-        return await poolContract.epochZombPerSecond(1);
+        return await poolContract.epochTombPerSecond(1);
       }
-      return await poolContract.epochZombPerSecond(0);
+      return await poolContract.epochTombPerSecond(0);
     }
     const rewardPerSecond = await poolContract.tSharePerSecond();
-    if (depositTokenName.startsWith('ZOMB')) {
+    if (depositTokenName.startsWith('TOMB')) {
       return rewardPerSecond.mul(35500).div(59500);
     } else {
       return rewardPerSecond.mul(24000).div(59500);
@@ -308,14 +308,14 @@ export class ZombFinance {
    */
   async getDepositTokenPriceInDollars(tokenName: string, token: ERC20) {
     let tokenPrice;
-    const priceOfOneFtmInDollars = await this.getWZSPPriceFromPancakeswap();
-    if (tokenName === 'WZSP') {
+    const priceOfOneFtmInDollars = await this.getWFTMPriceFromPancakeswap();
+    if (tokenName === 'WFTM') {
       tokenPrice = priceOfOneFtmInDollars;
     } else {
-      if (tokenName === 'ZOMB-ZSP-LP') {
-        tokenPrice = await this.getLPTokenPrice(token, this.ZOMB, true);
-      } else if (tokenName === 'ZSHARE-ZSP-LP') {
-        tokenPrice = await this.getLPTokenPrice(token, this.ZSHARE, false);
+      if (tokenName === 'TOMB-FTM-LP') {
+        tokenPrice = await this.getLPTokenPrice(token, this.TOMB, true);
+      } else if (tokenName === 'TSHARE-FTM-LP') {
+        tokenPrice = await this.getLPTokenPrice(token, this.TSHARE, false);
       } else if (tokenName === 'SHIBA') {
         tokenPrice = await this.getTokenPriceFromSpiritswap(token);
       } else {
@@ -347,8 +347,8 @@ export class ZombFinance {
    */
   async buyBonds(amount: string | number): Promise<TransactionResponse> {
     const { Treasury } = this.contracts;
-    const treasuryZombPrice = await Treasury.getZombPrice();
-    return await Treasury.buyBonds(decimalToBalance(amount), treasuryZombPrice);
+    const treasuryTombPrice = await Treasury.getTombPrice();
+    return await Treasury.buyBonds(decimalToBalance(amount), treasuryTombPrice);
   }
 
   /**
@@ -357,8 +357,8 @@ export class ZombFinance {
    */
   async redeemBonds(amount: string): Promise<TransactionResponse> {
     const { Treasury } = this.contracts;
-    const priceForZomb = await Treasury.getZombPrice();
-    return await Treasury.redeemBonds(decimalToBalance(amount), priceForZomb);
+    const priceForTomb = await Treasury.getTombPrice();
+    return await Treasury.redeemBonds(decimalToBalance(amount), priceForTomb);
   }
 
   async getTotalValueLocked(): Promise<Number> {
@@ -373,9 +373,9 @@ export class ZombFinance {
       totalValue += poolValue;
     }
 
-    const ZSHAREPrice = (await this.getShareStat()).priceInDollars;
-    const masonrytShareBalanceOf = await this.ZSHARE.balanceOf(this.currentMasonry().address);
-    const masonryTVL = Number(getDisplayBalance(masonrytShareBalanceOf, this.ZSHARE.decimal)) * Number(ZSHAREPrice);
+    const TSHAREPrice = (await this.getShareStat()).priceInDollars;
+    const masonrytShareBalanceOf = await this.TSHARE.balanceOf(this.currentMasonry().address);
+    const masonryTVL = Number(getDisplayBalance(masonrytShareBalanceOf, this.TSHARE.decimal)) * Number(TSHAREPrice);
 
     return totalValue + masonryTVL;
   }
@@ -384,15 +384,15 @@ export class ZombFinance {
    * Calculates the price of an LP token
    * Reference https://github.com/DefiDebauchery/discordpricebot/blob/4da3cdb57016df108ad2d0bb0c91cd8dd5f9d834/pricebot/pricebot.py#L150
    * @param lpToken the token under calculation
-   * @param token the token pair used as reference (the other one would be ZSP in most cases)
-   * @param isZomb sanity check for usage of zomb token or tShare
+   * @param token the token pair used as reference (the other one would be FTM in most cases)
+   * @param isTomb sanity check for usage of tomb token or tShare
    * @returns price of the LP token
    */
-  async getLPTokenPrice(lpToken: ERC20, token: ERC20, isZomb: boolean): Promise<string> {
+  async getLPTokenPrice(lpToken: ERC20, token: ERC20, isTomb: boolean): Promise<string> {
     const totalSupply = getFullDisplayBalance(await lpToken.totalSupply(), lpToken.decimal);
     //Get amount of tokenA
     const tokenSupply = getFullDisplayBalance(await token.balanceOf(lpToken.address), token.decimal);
-    const stat = isZomb === true ? await this.getZombStat() : await this.getShareStat();
+    const stat = isTomb === true ? await this.getTombStat() : await this.getShareStat();
     const priceOfToken = stat.priceInDollars;
     const tokenInLP = Number(tokenSupply) / Number(totalSupply);
     const tokenPrice = (Number(priceOfToken) * tokenInLP * 2) //We multiply by 2 since half the price of the lp token is the price of each piece of the pair. So twice gives the total
@@ -408,8 +408,8 @@ export class ZombFinance {
   ): Promise<BigNumber> {
     const pool = this.contracts[poolName];
     try {
-      if (earnTokenName === 'ZOMB') {
-        return await pool.pendingZOMB(poolId, account);
+      if (earnTokenName === 'TOMB') {
+        return await pool.pendingTOMB(poolId, account);
       } else {
         return await pool.pendingShare(poolId, account);
       }
@@ -489,9 +489,9 @@ export class ZombFinance {
     const ready = await this.provider.ready;
     if (!ready) return;
     const { chainId } = this.config;
-    const { WZSP } = this.config.externalTokens;
+    const { WFTM } = this.config.externalTokens;
 
-    const wftm = new Token(chainId, WZSP[0], WZSP[1]);
+    const wftm = new Token(chainId, WFTM[0], WFTM[1]);
     const token = new Token(chainId, tokenContract.address, tokenContract.decimal, tokenContract.symbol);
     try {
       const wftmToToken = await Fetcher.fetchPairData(wftm, token, this.provider);
@@ -508,18 +508,18 @@ export class ZombFinance {
     if (!ready) return;
     const { chainId } = this.config;
 
-    const { WZSP } = this.externalTokens;
+    const { WFTM } = this.externalTokens;
 
-    const wftm = new TokenSpirit(chainId, WZSP.address, WZSP.decimal);
+    const wftm = new TokenSpirit(chainId, WFTM.address, WFTM.decimal);
     const token = new TokenSpirit(chainId, tokenContract.address, tokenContract.decimal, tokenContract.symbol);
     try {
       const wftmToToken = await FetcherSpirit.fetchPairData(wftm, token, this.provider);
       const liquidityToken = wftmToToken.liquidityToken;
-      let ftmBalanceInLP = await WZSP.balanceOf(liquidityToken.address);
-      let ftmAmount = Number(getFullDisplayBalance(ftmBalanceInLP, WZSP.decimal));
+      let ftmBalanceInLP = await WFTM.balanceOf(liquidityToken.address);
+      let ftmAmount = Number(getFullDisplayBalance(ftmBalanceInLP, WFTM.decimal));
       let shibaBalanceInLP = await tokenContract.balanceOf(liquidityToken.address);
       let shibaAmount = Number(getFullDisplayBalance(shibaBalanceInLP, tokenContract.decimal));
-      const priceOfOneFtmInDollars = await this.getWZSPPriceFromPancakeswap();
+      const priceOfOneFtmInDollars = await this.getWFTMPriceFromPancakeswap();
       let priceOfShiba = (ftmAmount / shibaAmount) * Number(priceOfOneFtmInDollars);
       return priceOfShiba.toString();
     } catch (err) {
@@ -527,19 +527,19 @@ export class ZombFinance {
     }
   }
 
-  async getWZSPPriceFromPancakeswap(): Promise<string> {
+  async getWFTMPriceFromPancakeswap(): Promise<string> {
     const ready = await this.provider.ready;
     if (!ready) return;
-    const { WZSP, FUSDT } = this.externalTokens;
+    const { WFTM, FUSDT } = this.externalTokens;
     try {
-      const fusdt_wftm_lp_pair = this.externalTokens['USDT-ZSP-LP'];
-      let ftm_amount_BN = await WZSP.balanceOf(fusdt_wftm_lp_pair.address);
-      let ftm_amount = Number(getFullDisplayBalance(ftm_amount_BN, WZSP.decimal));
+      const fusdt_wftm_lp_pair = this.externalTokens['USDT-FTM-LP'];
+      let ftm_amount_BN = await WFTM.balanceOf(fusdt_wftm_lp_pair.address);
+      let ftm_amount = Number(getFullDisplayBalance(ftm_amount_BN, WFTM.decimal));
       let fusdt_amount_BN = await FUSDT.balanceOf(fusdt_wftm_lp_pair.address);
       let fusdt_amount = Number(getFullDisplayBalance(fusdt_amount_BN, FUSDT.decimal));
       return (fusdt_amount / ftm_amount).toString();
     } catch (err) {
-      console.error(`Failed to fetch token price of WZSP: ${err}`);
+      console.error(`Failed to fetch token price of WFTM: ${err}`);
     }
   }
 
@@ -556,14 +556,14 @@ export class ZombFinance {
 
     const lastRewardsReceived = lastHistory[1];
 
-    const ZSHAREPrice = (await this.getShareStat()).priceInDollars;
-    const ZOMBPrice = (await this.getZombStat()).priceInDollars;
+    const TSHAREPrice = (await this.getShareStat()).priceInDollars;
+    const TOMBPrice = (await this.getTombStat()).priceInDollars;
     const epochRewardsPerShare = lastRewardsReceived / 1e18;
 
     //Mgod formula
-    const amountOfRewardsPerDay = epochRewardsPerShare * Number(ZOMBPrice) * 4;
-    const masonrytShareBalanceOf = await this.ZSHARE.balanceOf(Masonry.address);
-    const masonryTVL = Number(getDisplayBalance(masonrytShareBalanceOf, this.ZSHARE.decimal)) * Number(ZSHAREPrice);
+    const amountOfRewardsPerDay = epochRewardsPerShare * Number(TOMBPrice) * 4;
+    const masonrytShareBalanceOf = await this.TSHARE.balanceOf(Masonry.address);
+    const masonryTVL = Number(getDisplayBalance(masonrytShareBalanceOf, this.TSHARE.decimal)) * Number(TSHAREPrice);
     const realAPR = ((amountOfRewardsPerDay * 100) / masonryTVL) * 365;
     return realAPR;
   }
@@ -585,7 +585,7 @@ export class ZombFinance {
     const Masonry = this.currentMasonry();
     const canWithdraw = await Masonry.canWithdraw(this.myAccount);
     const stakedAmount = await this.getStakedSharesOnMasonry();
-    const notStaked = Number(getDisplayBalance(stakedAmount, this.ZSHARE.decimal)) === 0;
+    const notStaked = Number(getDisplayBalance(stakedAmount, this.TSHARE.decimal)) === 0;
     const result = notStaked ? true : canWithdraw;
     return result;
   }
@@ -603,7 +603,7 @@ export class ZombFinance {
 
   async stakeShareToMasonry(amount: string): Promise<TransactionResponse> {
     if (this.isOldMasonryMember()) {
-      throw new Error("you're using old masonry. please withdraw and deposit the ZSHARE again.");
+      throw new Error("you're using old masonry. please withdraw and deposit the TSHARE again.");
     }
     const Masonry = this.currentMasonry();
     return await Masonry.stake(decimalToBalance(amount));
@@ -722,15 +722,15 @@ export class ZombFinance {
     if (ethereum && ethereum.networkVersion === config.chainId.toString()) {
       let asset;
       let assetUrl;
-      if (assetName === 'ZOMB') {
-        asset = this.ZOMB;
-        assetUrl = 'https://zomb.finance/presskit/zomb_icon_noBG.png';
-      } else if (assetName === 'ZSHARE') {
-        asset = this.ZSHARE;
-        assetUrl = 'https://zomb.finance/presskit/zshare_icon_noBG.png';
+      if (assetName === 'TOMB') {
+        asset = this.TOMB;
+        assetUrl = 'https://tomb.finance/presskit/tomb_icon_noBG.png';
+      } else if (assetName === 'TSHARE') {
+        asset = this.TSHARE;
+        assetUrl = 'https://tomb.finance/presskit/tshare_icon_noBG.png';
       } else if (assetName === 'TBOND') {
         asset = this.TBOND;
-        assetUrl = 'https://zomb.finance/presskit/tbond_icon_noBG.png';
+        assetUrl = 'https://tomb.finance/presskit/tbond_icon_noBG.png';
       }
       await ethereum.request({
         method: 'wallet_watchAsset',
@@ -748,19 +748,19 @@ export class ZombFinance {
     return true;
   }
 
-  async provideZombFtmLP(ftmAmount: string, zombAmount: BigNumber): Promise<TransactionResponse> {
+  async provideTombFtmLP(ftmAmount: string, tombAmount: BigNumber): Promise<TransactionResponse> {
     const { TaxOffice } = this.contracts;
     let overrides = {
       value: parseUnits(ftmAmount, 18),
     };
-    return await TaxOffice.addLiquidityETHTaxFree(zombAmount, zombAmount.mul(992).div(1000), parseUnits(ftmAmount, 18).mul(992).div(1000), overrides);
+    return await TaxOffice.addLiquidityETHTaxFree(tombAmount, tombAmount.mul(992).div(1000), parseUnits(ftmAmount, 18).mul(992).div(1000), overrides);
   }
 
   async quoteFromSpooky(tokenAmount: string, tokenName: string): Promise<string> {
     const { SpookyRouter } = this.contracts;
-    const { _reserve0, _reserve1 } = await this.ZOMBWZSP_LP.getReserves();
+    const { _reserve0, _reserve1 } = await this.TOMBWFTM_LP.getReserves();
     let quote;
-    if (tokenName === 'ZOMB') {
+    if (tokenName === 'TOMB') {
       quote = await SpookyRouter.quote(parseUnits(tokenAmount), _reserve1, _reserve0);
     } else {
       quote = await SpookyRouter.quote(parseUnits(tokenAmount), _reserve0, _reserve1);
@@ -845,10 +845,10 @@ export class ZombFinance {
     const { zapper } = this.contracts;
     const lpToken = this.externalTokens[lpName];
     let estimate;
-    if (tokenName === ZSP_TICKER) {
+    if (tokenName === FTM_TICKER) {
       estimate = await zapper.estimateZapIn(lpToken.address, SPOOKY_ROUTER_ADDR, parseUnits(amount, 18));
     } else {
-      const token = tokenName === ZOMB_TICKER ? this.ZOMB : this.ZSHARE;
+      const token = tokenName === TOMB_TICKER ? this.TOMB : this.TSHARE;
       estimate = await zapper.estimateZapInToken(
         token.address,
         lpToken.address,
@@ -861,13 +861,13 @@ export class ZombFinance {
   async zapIn(tokenName: string, lpName: string, amount: string): Promise<TransactionResponse> {
     const { zapper } = this.contracts;
     const lpToken = this.externalTokens[lpName];
-    if (tokenName === ZSP_TICKER) {
+    if (tokenName === FTM_TICKER) {
       let overrides = {
         value: parseUnits(amount, 18),
       };
       return await zapper.zapIn(lpToken.address, SPOOKY_ROUTER_ADDR, this.myAccount, overrides);
     } else {
-      const token = tokenName === ZOMB_TICKER ? this.ZOMB : this.ZSHARE;
+      const token = tokenName === TOMB_TICKER ? this.TOMB : this.TSHARE;
       return await zapper.zapInToken(
         token.address,
         parseUnits(amount, 18),
@@ -887,25 +887,25 @@ export class ZombFinance {
       const estimateBN = await TShareSwapper.estimateAmountOfTShare(parseUnits(tbondAmount, 18));
       return getDisplayBalance(estimateBN, 18, 6);
     } catch (err) {
-      console.error(`Failed to fetch estimate zshare amount: ${err}`);
+      console.error(`Failed to fetch estimate tshare amount: ${err}`);
     }
   }
 
   async getTShareSwapperStat(address: string): Promise<TShareSwapperStat> {
     const { TShareSwapper } = this.contracts;
-    const zshareBalanceBN = await TShareSwapper.getTShareBalance();
+    const tshareBalanceBN = await TShareSwapper.getTShareBalance();
     const tbondBalanceBN = await TShareSwapper.getTBondBalance(address);
-    // const zombPriceBN = await TShareSwapper.getZombPrice();
-    // const zsharePriceBN = await TShareSwapper.getTSharePrice();
-    const rateTSharePerZombBN = await TShareSwapper.getTShareAmountPerZomb();
-    const zshareBalance = getDisplayBalance(zshareBalanceBN, 18, 5);
+    // const tombPriceBN = await TShareSwapper.getTombPrice();
+    // const tsharePriceBN = await TShareSwapper.getTSharePrice();
+    const rateTSharePerTombBN = await TShareSwapper.getTShareAmountPerTomb();
+    const tshareBalance = getDisplayBalance(tshareBalanceBN, 18, 5);
     const tbondBalance = getDisplayBalance(tbondBalanceBN, 18, 5);
     return {
-      zshareBalance: zshareBalance.toString(),
+      tshareBalance: tshareBalance.toString(),
       tbondBalance: tbondBalance.toString(),
-      // zombPrice: zombPriceBN.toString(),
-      // zsharePrice: zsharePriceBN.toString(),
-      rateTSharePerZomb: rateTSharePerZombBN.toString(),
+      // tombPrice: tombPriceBN.toString(),
+      // tsharePrice: tsharePriceBN.toString(),
+      rateTSharePerTomb: rateTSharePerTombBN.toString(),
     };
   }
 }

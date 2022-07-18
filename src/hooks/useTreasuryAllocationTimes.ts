@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import useZombFinance from './useZombFinance';
-import { AllocationTime } from '../zomb-finance/types';
+import useTombFinance from './useTombFinance';
+import { AllocationTime } from '../tomb-finance/types';
 import useRefresh from './useRefresh';
 
 
@@ -10,12 +10,12 @@ const useTreasuryAllocationTimes = () => {
     from: new Date(),
     to: new Date(),
   });
-  const zombFinance = useZombFinance();
+  const tombFinance = useTombFinance();
   useEffect(() => {
-    if (zombFinance) {
-      zombFinance.getTreasuryNextAllocationTime().then(setTime);
+    if (tombFinance) {
+      tombFinance.getTreasuryNextAllocationTime().then(setTime);
     }
-  }, [zombFinance, slowRefresh]);
+  }, [tombFinance, slowRefresh]);
   return time;
 };
 

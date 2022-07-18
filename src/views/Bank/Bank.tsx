@@ -15,8 +15,8 @@ import Stake from './components/Stake';
 import useBank from '../../hooks/useBank';
 import useStatsForPool from '../../hooks/useStatsForPool';
 import useRedeem from '../../hooks/useRedeem';
-import { Bank as BankEntity } from '../../zomb-finance';
-import useZombFinance from '../../hooks/useZombFinance';
+import { Bank as BankEntity } from '../../tomb-finance';
+import useTombFinance from '../../hooks/useTombFinance';
 
 const useStyles = makeStyles((theme) => ({
   gridItem: {
@@ -100,18 +100,18 @@ const Bank: React.FC = () => {
 };
 
 const LPTokenHelpText: React.FC<{ bank: BankEntity }> = ({ bank }) => {
-  const zombFinance = useZombFinance();
-  const zombAddr = zombFinance.ZOMB.address;
-  const zshareAddr = zombFinance.ZSHARE.address;
+  const tombFinance = useTombFinance();
+  const tombAddr = tombFinance.TOMB.address;
+  const tshareAddr = tombFinance.TSHARE.address;
 
   let pairName: string;
   let uniswapUrl: string;
-  if (bank.depositTokenName.includes('ZOMB')) {
-    pairName = 'ZOMB-ZSP pair';
-    uniswapUrl = 'https://spookyswap.finance/add/ZSP/' + zombAddr;
+  if (bank.depositTokenName.includes('TOMB')) {
+    pairName = 'TOMB-FTM pair';
+    uniswapUrl = 'https://spookyswap.finance/add/FTM/' + tombAddr;
   } else {
-    pairName = 'ZSHARE-ZSP pair';
-    uniswapUrl = 'https://spookyswap.finance/add/ZSP/' + zshareAddr;
+    pairName = 'TSHARE-FTM pair';
+    uniswapUrl = 'https://spookyswap.finance/add/FTM/' + tshareAddr;
   }
   return (
     <Card>

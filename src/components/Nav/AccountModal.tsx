@@ -6,19 +6,19 @@ import { getDisplayBalance } from '../../utils/formatBalance';
 import Label from '../Label';
 import Modal, { ModalProps } from '../Modal';
 import ModalTitle from '../ModalTitle';
-import useZombFinance from '../../hooks/useZombFinance';
+import useTombFinance from '../../hooks/useTombFinance';
 import TokenSymbol from '../TokenSymbol';
 
 const AccountModal: React.FC<ModalProps> = ({ onDismiss }) => {
-  const zombFinance = useZombFinance();
+  const tombFinance = useTombFinance();
 
-  const zombBalance = useTokenBalance(zombFinance.ZOMB);
-  const displayZombBalance = useMemo(() => getDisplayBalance(zombBalance), [zombBalance]);
+  const tombBalance = useTokenBalance(tombFinance.TOMB);
+  const displayTombBalance = useMemo(() => getDisplayBalance(tombBalance), [tombBalance]);
 
-  const zshareBalance = useTokenBalance(zombFinance.ZSHARE);
-  const displayZshareBalance = useMemo(() => getDisplayBalance(zshareBalance), [zshareBalance]);
+  const tshareBalance = useTokenBalance(tombFinance.TSHARE);
+  const displayTshareBalance = useMemo(() => getDisplayBalance(tshareBalance), [tshareBalance]);
 
-  const tbondBalance = useTokenBalance(zombFinance.TBOND);
+  const tbondBalance = useTokenBalance(tombFinance.TBOND);
   const displayTbondBalance = useMemo(() => getDisplayBalance(tbondBalance), [tbondBalance]);
 
   return (
@@ -27,18 +27,18 @@ const AccountModal: React.FC<ModalProps> = ({ onDismiss }) => {
 
       <Balances>
         <StyledBalanceWrapper>
-          <TokenSymbol symbol="ZOMB" />
+          <TokenSymbol symbol="TOMB" />
           <StyledBalance>
-            <StyledValue>{displayZombBalance}</StyledValue>
-            <Label text="ZOMB Available" />
+            <StyledValue>{displayTombBalance}</StyledValue>
+            <Label text="TOMB Available" />
           </StyledBalance>
         </StyledBalanceWrapper>
 
         <StyledBalanceWrapper>
-          <TokenSymbol symbol="ZSHARE" />
+          <TokenSymbol symbol="TSHARE" />
           <StyledBalance>
-            <StyledValue>{displayZshareBalance}</StyledValue>
-            <Label text="ZSHARE Available" />
+            <StyledValue>{displayTshareBalance}</StyledValue>
+            <Label text="TSHARE Available" />
           </StyledBalance>
         </StyledBalanceWrapper>
 

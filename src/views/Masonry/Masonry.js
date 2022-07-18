@@ -89,7 +89,7 @@ const Masonry = () => {
                 <Card className={classes.gridItem}>
                   <CardContent align="center">
                     <Typography>
-                      ZOMB Price<small>(TWAP)</small>
+                      TOMB Price<small>(TWAP)</small>
                     </Typography>
                     <Typography>{scalingFactor}</Typography>
                   </CardContent>
@@ -106,7 +106,7 @@ const Masonry = () => {
               <Grid item xs={12} md={2} lg={2}>
                 <Card className={classes.gridItem}>
                   <CardContent align="center">
-                    <Typography>ZSHARES Staked</Typography>
+                    <Typography>TSHARES Staked</Typography>
                     <Typography>{getDisplayBalance(totalStaked)}</Typography>
                   </CardContent>
                 </Card>
@@ -116,7 +116,7 @@ const Masonry = () => {
             <Grid container justify="center">
               <Box mt={3} style={{ width: '600px' }}>
                 <Alert variant="filled" severity="warning">
-                  Staked ZSHAREs can only be withdrawn after 6 epochs since deposit.
+                  Staked TSHAREs can only be withdrawn after 6 epochs since deposit.
                 </Alert>
               </Box>
             </Grid>

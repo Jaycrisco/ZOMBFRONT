@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
-import useZombFinance from '../useZombFinance';
-import { TShareSwapperStat } from '../../zomb-finance/types';
+import useTombFinance from '../useTombFinance';
+import { TShareSwapperStat } from '../../tomb-finance/types';
 import useRefresh from '../useRefresh';
 
 const useTShareSwapperStats = (account: string) => {
   const [stat, setStat] = useState<TShareSwapperStat>();
   const { fastRefresh/*, slowRefresh*/ } = useRefresh();
-  const zombFinance = useZombFinance();
+  const tombFinance = useTombFinance();
 
   useEffect(() => {
     async function fetchTShareSwapperStat() {
       try{
-        if(zombFinance.myAccount) {
-          setStat(await zombFinance.getTShareSwapperStat(account));
+        if(tombFinance.myAccount) {
+          setStat(await tombFinance.getTShareSwapperStat(account));
         }
       }
       catch(err){
@@ -20,7 +20,7 @@ const useTShareSwapperStats = (account: string) => {
       }
     }
     fetchTShareSwapperStat();
-  }, [setStat, zombFinance, fastRefresh, account]);
+  }, [setStat, tombFinance, fastRefresh, account]);
 
   return stat;
 };

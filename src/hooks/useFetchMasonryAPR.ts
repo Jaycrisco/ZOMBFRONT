@@ -1,22 +1,22 @@
 import { useEffect, useState } from 'react';
-import useZombFinance from './useZombFinance';
+import useTombFinance from './useTombFinance';
 import useRefresh from './useRefresh';
 
 const useFetchMasonryAPR = () => {
   const [apr, setApr] = useState<number>(0);
-  const zombFinance = useZombFinance();
+  const tombFinance = useTombFinance();
   const { slowRefresh } = useRefresh(); 
 
   useEffect(() => {
     async function fetchMasonryAPR() {
       try {
-        setApr(await zombFinance.getMasonryAPR());
+        setApr(await tombFinance.getMasonryAPR());
       } catch(err){
         console.error(err);
       }
     }
    fetchMasonryAPR();
-  }, [setApr, zombFinance, slowRefresh]);
+  }, [setApr, tombFinance, slowRefresh]);
 
   return apr;
 };

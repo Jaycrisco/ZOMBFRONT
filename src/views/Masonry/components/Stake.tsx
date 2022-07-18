@@ -21,7 +21,7 @@ import { getDisplayBalance } from '../../../utils/formatBalance';
 
 import DepositModal from './DepositModal';
 import WithdrawModal from './WithdrawModal';
-import useZombFinance from '../../../hooks/useZombFinance';
+import useTombFinance from '../../../hooks/useTombFinance';
 import ProgressCountdown from './../components/ProgressCountdown';
 import useStakedBalanceOnMasonry from '../../../hooks/useStakedBalanceOnMasonry';
 import useStakedTokenPriceInDollars from '../../../hooks/useStakedTokenPriceInDollars';
@@ -31,14 +31,14 @@ import useStakeToMasonry from '../../../hooks/useStakeToMasonry';
 import useWithdrawFromMasonry from '../../../hooks/useWithdrawFromMasonry';
 
 const Stake: React.FC = () => {
-  const zombFinance = useZombFinance();
-  const [approveStatus, approve] = useApprove(zombFinance.ZSHARE, zombFinance.contracts.Masonry.address);
+  const tombFinance = useTombFinance();
+  const [approveStatus, approve] = useApprove(tombFinance.TSHARE, tombFinance.contracts.Masonry.address);
 
-  const tokenBalance = useTokenBalance(zombFinance.ZSHARE);
+  const tokenBalance = useTokenBalance(tombFinance.TSHARE);
   const stakedBalance = useStakedBalanceOnMasonry();
   const { from, to } = useUnstakeTimerMasonry();
 
-  const stakedTokenPriceInDollars = useStakedTokenPriceInDollars('ZSHARE', zombFinance.ZSHARE);
+  const stakedTokenPriceInDollars = useStakedTokenPriceInDollars('TSHARE', tombFinance.TSHARE);
   const tokenPriceInDollars = useMemo(
     () =>
       stakedTokenPriceInDollars
@@ -81,11 +81,11 @@ const Stake: React.FC = () => {
           <StyledCardContentInner>
             <StyledCardHeader>
               <CardIcon>
-                <TokenSymbol symbol="ZSHARE" />
+                <TokenSymbol symbol="TSHARE" />
               </CardIcon>
               <Value value={getDisplayBalance(stakedBalance)} />
               <Label text={`≈ $${tokenPriceInDollars}`} />
-              <Label text={'ZSHARE Staked'} />
+              <Label text={'TSHARE Staked'} />
             </StyledCardHeader>
             <StyledCardActions>
               {approveStatus !== ApprovalState.APPROVED ? (
@@ -96,7 +96,7 @@ const Stake: React.FC = () => {
                   style={{ marginTop: '20px' }}
                   onClick={approve}
                 >
-                  Approve ZSHARE
+                  Approve TSHARE
                 </Button>
               ) : (
                 <>

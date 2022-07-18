@@ -1,24 +1,24 @@
 import { useEffect, useState } from 'react';
-import useZombFinance from './useZombFinance';
-import { LPStat } from '../zomb-finance/types';
+import useTombFinance from './useTombFinance';
+import { LPStat } from '../tomb-finance/types';
 import useRefresh from './useRefresh';
 
 const useLpStats = (lpTicker: string) => {
   const [stat, setStat] = useState<LPStat>();
   const { slowRefresh } = useRefresh();
-  const zombFinance = useZombFinance();
+  const tombFinance = useTombFinance();
 
   useEffect(() => {
     async function fetchLpPrice() {
       try{
-        setStat(await zombFinance.getLPStat(lpTicker));
+        setStat(await tombFinance.getLPStat(lpTicker));
       }
       catch(err){
         console.error(err);
       }
     }
     fetchLpPrice();
-  }, [setStat, zombFinance, slowRefresh, lpTicker]);
+  }, [setStat, tombFinance, slowRefresh, lpTicker]);
 
   return stat;
 };

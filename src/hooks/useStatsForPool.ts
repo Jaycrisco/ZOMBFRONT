@@ -1,23 +1,23 @@
 import { useCallback, useState, useEffect } from 'react';
-import useZombFinance from './useZombFinance';
-import { Bank } from '../zomb-finance';
-import { PoolStats } from '../zomb-finance/types';
+import useTombFinance from './useTombFinance';
+import { Bank } from '../tomb-finance';
+import { PoolStats } from '../tomb-finance/types';
 import config from '../config';
 
 const useStatsForPool = (bank: Bank) => {
-  const zombFinance = useZombFinance();
+  const tombFinance = useTombFinance();
 
   const [poolAPRs, setPoolAPRs] = useState<PoolStats>();
 
   const fetchAPRsForPool = useCallback(async () => {
-    setPoolAPRs(await zombFinance.getPoolAPRs(bank));
-  }, [zombFinance, bank]);
+    setPoolAPRs(await tombFinance.getPoolAPRs(bank));
+  }, [tombFinance, bank]);
 
   useEffect(() => {
     fetchAPRsForPool().catch((err) => console.error(`Failed to fetch TBOND price: ${err.stack}`));
     const refreshInterval = setInterval(fetchAPRsForPool, config.refreshInterval);
     return () => clearInterval(refreshInterval);
-  }, [setPoolAPRs, zombFinance, fetchAPRsForPool]);
+  }, [setPoolAPRs, tombFinance, fetchAPRsForPool]);
 
   return poolAPRs;
 };

@@ -1,24 +1,24 @@
 import { useCallback } from 'react';
-import useZombFinance from './useZombFinance';
+import useTombFinance from './useTombFinance';
 import useHandleTransactionReceipt from './useHandleTransactionReceipt';
 import { parseUnits } from 'ethers/lib/utils';
 import { TAX_OFFICE_ADDR } from './../utils/constants'
 
-const useProvideZombFtmLP = () => {
-  const zombFinance = useZombFinance();
+const useProvideTombFtmLP = () => {
+  const tombFinance = useTombFinance();
   const handleTransactionReceipt = useHandleTransactionReceipt();
 
-  const handleProvideZombFtmLP = useCallback(
-    (ftmAmount: string, zombAmount: string) => {
-      const zombAmountBn = parseUnits(zombAmount);
+  const handleProvideTombFtmLP = useCallback(
+    (ftmAmount: string, tombAmount: string) => {
+      const tombAmountBn = parseUnits(tombAmount);
       handleTransactionReceipt(
-        zombFinance.provideZombFtmLP(ftmAmount, zombAmountBn),
-        `Provide Zomb-ZSP LP ${zombAmount} ${ftmAmount} using ${TAX_OFFICE_ADDR}`,
+        tombFinance.provideTombFtmLP(ftmAmount, tombAmountBn),
+        `Provide Tomb-FTM LP ${tombAmount} ${ftmAmount} using ${TAX_OFFICE_ADDR}`,
       );
     },
-    [zombFinance, handleTransactionReceipt],
+    [tombFinance, handleTransactionReceipt],
   );
-  return { onProvideZombFtmLP: handleProvideZombFtmLP };
+  return { onProvideTombFtmLP: handleProvideTombFtmLP };
 };
 
-export default useProvideZombFtmLP;
+export default useProvideTombFtmLP;
