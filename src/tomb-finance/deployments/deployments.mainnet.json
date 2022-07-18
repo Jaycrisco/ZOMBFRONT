@@ -457,7 +457,7 @@
     ]
   },
   "SeigniorageOracle": {
-    "address": "0x55530fA1B042582D5FA3C313a7e02d21Af6B82f4",
+    "address": "0xE9Fd98DEa3F4Bdab7A4b1F03117F3F44955aA8c5",
     "abi": [
       {
         "inputs": [
