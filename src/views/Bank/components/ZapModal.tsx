@@ -12,7 +12,7 @@ import { getDisplayBalance } from '../../../utils/formatBalance';
 import Label from '../../../components/Label';
 import useLpStats from '../../../hooks/useLpStats';
 import useTokenBalance from '../../../hooks/useTokenBalance';
-import useZombFinance from '../../../hooks/useZombFinance';
+import useZombFinance from '../../../hooks/useTombFinance';
 import { useWallet } from 'use-wallet';
 import useApproveZapper, { ApprovalState } from '../../../hooks/useApproveZapper';
 import { ZOMB_TICKER, ZSHARE_TICKER, ZSP_TICKER } from '../../../utils/constants';

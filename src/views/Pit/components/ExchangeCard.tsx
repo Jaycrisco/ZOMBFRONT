@@ -6,7 +6,7 @@ import { Button, Card } from '@material-ui/core';
 // import Button from '../../../components/Button';
 // import Card from '../../../components/Card';
 import CardContent from '../../../components/CardContent';
-import useZombFinance from '../../../hooks/useZombFinance';
+import useZombFinance from '../../../hooks/useTombFinance';
 import Label from '../../../components/Label';
 import TokenSymbol from '../../../components/TokenSymbol';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

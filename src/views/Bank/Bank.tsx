@@ -16,7 +16,7 @@ import useBank from '../../hooks/useBank';
 import useStatsForPool from '../../hooks/useStatsForPool';
 import useRedeem from '../../hooks/useRedeem';
 import { Bank as BankEntity } from '../../tomb-finance';
-import useZombFinance from '../../hooks/useZombFinance';
+import useZombFinance from '../../hooks/useTombFinance';
 
 const useStyles = makeStyles((theme) => ({
   gridItem: {

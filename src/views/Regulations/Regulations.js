@@ -6,7 +6,7 @@ import { Typography, Table, TableBody, TableCell, TableContainer, TableHead, Tab
 import Page from '../../components/Page';
 import RegulationsImage from '../../assets/img/regulations_bg.png';
 import { createGlobalStyle } from 'styled-components';
-import useZombFinance from '../../hooks/useZombFinance';
+import useZombFinance from '../../hooks/useTombFinance';
 
 const BackgroundImage = createGlobalStyle`
   body, html {

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Context from './context';
-import useZombFinance from '../../hooks/useZombFinance';
+import useZombFinance from '../../hooks/useTombFinance';
 import { Bank } from '../../tomb-finance';
 import config, { bankDefinitions } from '../../config';
 
