@@ -16,8 +16,8 @@ import useZap from '../../hooks/useZap';
 import useBondStats from '../../hooks/useBondStats';
 import usezShareStats from '../../hooks/usetShareStats';
 import useTotalValueLocked from '../../hooks/useTotalValueLocked';
-import { zomb as zombTesting, zShare as zShareTesting } from '../../zomb-finance/deployments/deployments.testing.json';
-import { zomb as zombProd, zShare as zShareProd } from '../../zomb-finance/deployments/deployments.mainnet.json';
+import { zomb as zombTesting, zShare as zShareTesting } from '../../tomb-finance/deployments/deployments.testing.json';
+import { zomb as zombProd, zShare as zShareProd } from '../../tomb-finance/deployments/deployments.mainnet.json';
 
 import MetamaskFox from '../../assets/img/metamask-fox.svg';
 
