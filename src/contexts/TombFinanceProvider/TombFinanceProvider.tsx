@@ -1,30 +1,30 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { useWallet } from 'use-wallet';
-import TombFinance from '../../tomb-finance';
+import ZombFinance from '../../tomb-finance';
 import config from '../../config';
 
-export interface TombFinanceContext {
-  tombFinance?: TombFinance;
+export interface ZombFinanceContext {
+  zombFinance?: ZombFinance;
 }
 
-export const Context = createContext<TombFinanceContext>({ tombFinance: null });
+export const Context = createContext<ZombFinanceContext>({ zombFinance: null });
 
-export const TombFinanceProvider: React.FC = ({ children }) => {
+export const ZombFinanceProvider: React.FC = ({ children }) => {
   const { ethereum, account } = useWallet();
-  const [tombFinance, setTombFinance] = useState<TombFinance>();
+  const [zombFinance, setZombFinance] = useState<ZombFinance>();
 
   useEffect(() => {
-    if (!tombFinance) {
-      const tomb = new TombFinance(config);
+    if (!zombFinance) {
+      const zomb = new ZombFinance(config);
       if (account) {
         // wallet was unlocked at initialization
-        tomb.unlockWallet(ethereum, account);
+        zomb.unlockWallet(ethereum, account);
       }
-      setTombFinance(tomb);
+      setZombFinance(zomb);
     } else if (account) {
-      tombFinance.unlockWallet(ethereum, account);
+      zombFinance.unlockWallet(ethereum, account);
     }
-  }, [account, ethereum, tombFinance]);
+  }, [account, ethereum, zombFinance]);
 
-  return <Context.Provider value={{ tombFinance }}>{children}</Context.Provider>;
+  return <Context.Provider value={{ zombFinance }}>{children}</Context.Provider>;
 };

@@ -1,23 +1,23 @@
 import { useEffect, useState } from 'react';
-import useTombFinance from './useTombFinance';
+import useZombFinance from './useZombFinance';
 import { TokenStat } from '../tomb-finance/types';
 import useRefresh from './useRefresh';
 
 const useShareStats = () => {
   const [stat, setStat] = useState<TokenStat>();
   const { slowRefresh } = useRefresh();
-  const tombFinance = useTombFinance();
+  const zombFinance = useZombFinance();
 
   useEffect(() => {
     async function fetchSharePrice() {
       try {
-        setStat(await tombFinance.getShareStat());
+        setStat(await zombFinance.gezShareStat());
       } catch(err){
         console.error(err)
       }
     }
     fetchSharePrice();
-  }, [setStat, tombFinance, slowRefresh]);
+  }, [setStat, zombFinance, slowRefresh]);
 
   return stat;
 };

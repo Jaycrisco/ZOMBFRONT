@@ -6,7 +6,7 @@ import { ThemeProvider as TP1 } from 'styled-components';
 import { UseWalletProvider } from 'use-wallet';
 import usePromptNetwork from './hooks/useNetworkPrompt';
 import BanksProvider from './contexts/Banks';
-import TombFinanceProvider from './contexts/TombFinanceProvider';
+import ZombFinanceProvider from './contexts/ZombFinanceProvider';
 import ModalsProvider from './contexts/Modals';
 import store from './state';
 import theme from './theme';
@@ -87,7 +87,7 @@ const Providers: React.FC = ({ children }) => {
             walletconnect: { rpcUrl: config.defaultProvider },
             walletlink: {
               url: config.defaultProvider,
-              appName: 'Tomb Finance',
+              appName: 'Zomb Finance',
               appLogoUrl: 'https://github.com/tombfinance/tombfinance-assets/blob/master/logo_tomb_NoBG.png',
             },
           }}
@@ -95,7 +95,7 @@ const Providers: React.FC = ({ children }) => {
           <Provider store={store}>
             <Updaters />
             <RefreshContextProvider>
-              <TombFinanceProvider>
+              <ZombFinanceProvider>
                 <ModalsProvider>
                   <BanksProvider>
                     <>
@@ -104,7 +104,7 @@ const Providers: React.FC = ({ children }) => {
                     </>
                   </BanksProvider>
                 </ModalsProvider>
-              </TombFinanceProvider>
+              </ZombFinanceProvider>
             </RefreshContextProvider>
           </Provider>
         </UseWalletProvider>

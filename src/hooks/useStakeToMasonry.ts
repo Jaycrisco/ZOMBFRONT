@@ -1,16 +1,16 @@
 import { useCallback } from 'react';
-import useTombFinance from './useTombFinance';
+import useZombFinance from './useZombFinance';
 import useHandleTransactionReceipt from './useHandleTransactionReceipt';
 
 const useStakeToMasonry = () => {
-  const tombFinance = useTombFinance();
+  const zombFinance = useZombFinance();
   const handleTransactionReceipt = useHandleTransactionReceipt();
 
   const handleStake = useCallback(
     (amount: string) => {
-      handleTransactionReceipt(tombFinance.stakeShareToMasonry(amount), `Stake ${amount} TSHARE to the masonry`);
+      handleTransactionReceipt(zombFinance.stakeShareToMasonry(amount), `Stake ${amount} ZSHARE to the masonry`);
     },
-    [tombFinance, handleTransactionReceipt],
+    [zombFinance, handleTransactionReceipt],
   );
   return { onStake: handleStake };
 };

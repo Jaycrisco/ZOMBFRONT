@@ -1,25 +1,25 @@
 import { useCallback } from 'react';
-import useTombFinance from '../useTombFinance';
+import useZombFinance from '../useZombFinance';
 import useHandleTransactionReceipt from '../useHandleTransactionReceipt';
 // import { BigNumber } from "ethers";
 import { parseUnits } from 'ethers/lib/utils';
 
 
-const useSwapTBondToTShare = () => {
-  const tombFinance = useTombFinance();
+const useSwapTBondToZShare = () => {
+  const zombFinance = useZombFinance();
   const handleTransactionReceipt = useHandleTransactionReceipt();
 
-  const handleSwapTShare = useCallback(
+  const handleSwapZShare = useCallback(
   	(tbondAmount: string) => {
 	  	const tbondAmountBn = parseUnits(tbondAmount, 18);
 	  	handleTransactionReceipt(
-	  		tombFinance.swapTBondToTShare(tbondAmountBn),
-	  		`Swap ${tbondAmount} TBond to TShare`
+	  		zombFinance.swapTBondToZShare(tbondAmountBn),
+	  		`Swap ${tbondAmount} TBond to ZShare`
 	  	);
   	},
-  	[tombFinance, handleTransactionReceipt]
+  	[zombFinance, handleTransactionReceipt]
   );
-  return { onSwapTShare: handleSwapTShare };
+  return { onSwapZShare: handleSwapZShare };
 };
 
-export default useSwapTBondToTShare;
+export default useSwapTBondToZShare;

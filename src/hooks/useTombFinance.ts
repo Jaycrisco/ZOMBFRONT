@@ -1,9 +1,9 @@
 import { useContext } from 'react';
-import { Context } from '../contexts/TombFinanceProvider';
+import { Context } from '../contexts/ZombFinanceProvider';
 
-const useTombFinance = () => {
-  const { tombFinance } = useContext(Context);
-  return tombFinance;
+const useZombFinance = () => {
+  const { zombFinance } = useContext(Context);
+  return zombFinance;
 };
 
-export default useTombFinance;
+export default useZombFinance;

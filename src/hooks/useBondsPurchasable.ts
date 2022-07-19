@@ -1,24 +1,24 @@
 import { useCallback, useEffect, useState } from 'react';
 import { BigNumber } from 'ethers';
 import ERC20 from '../tomb-finance/ERC20';
-import useTombFinance from './useTombFinance';
+import useZombFinance from './useZombFinance';
 import config from '../config';
 
 const useBondsPurchasable = () => {
   const [balance, setBalance] = useState(BigNumber.from(0));
-  const tombFinance = useTombFinance();
+  const zombFinance = useZombFinance();
 
   useEffect(() => {
     async function fetchBondsPurchasable() {
         try {
-            setBalance(await tombFinance.getBondsPurchasable());
+            setBalance(await zombFinance.getBondsPurchasable());
         }
         catch(err) {
             console.error(err);
         }
       }
     fetchBondsPurchasable();
-  }, [setBalance, tombFinance]);
+  }, [setBalance, zombFinance]);
 
   return balance;
 };

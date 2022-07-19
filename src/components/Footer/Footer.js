@@ -45,7 +45,7 @@ const Footer = () => {
             <Typography variant="body2" color="textSecondary" align="left">
               {'Copyright © '}
               <Link color="inherit" href="/">
-                Tomb Finance
+                Zomb Finance
               </Link>{' '}
               {new Date().getFullYear()}
             </Typography>

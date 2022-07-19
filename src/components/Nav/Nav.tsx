@@ -95,9 +95,9 @@ const Nav = () => {
         {matches ? (
           <>
             <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
-              {/* <a className={ classes.brandLink } href="/">Tomb Finance</a> */}
+              {/* <a className={ classes.brandLink } href="/">Zomb Finance</a> */}
               <Link to="/" color="inherit" className={classes.brandLink}>
-                Tomb Finance
+                Zomb Finance
               </Link>
             </Typography>
             <Box mr={5}>
@@ -140,7 +140,7 @@ const Nav = () => {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap>
-              Tomb Finance
+              Zomb Finance
             </Typography>
 
             <Drawer
