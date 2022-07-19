@@ -1,1 +1,1 @@
-export { ZombFinanceProvider as default, Context } from './ZombFinanceProvider';
+export { ZombFinanceProvider as default, Context } from './TombFinanceProvider';
