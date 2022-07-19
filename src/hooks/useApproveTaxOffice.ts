@@ -4,7 +4,7 @@ import { useHasPendingApproval, useTransactionAdder } from '../state/transaction
 import useAllowance from './useAllowance';
 import ERC20 from '../tomb-finance/ERC20';
 import { TAX_OFFICE_ADDR } from '../utils/constants';
-import useZombFinance from './useZombFinance';
+import useZombFinance from './useTombFinance';
 
 const APPROVE_AMOUNT = ethers.constants.MaxUint256;
 const APPROVE_BASE_AMOUNT = BigNumber.from('1000000000000000000000000');

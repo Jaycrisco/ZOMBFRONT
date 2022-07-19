@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import useZombFinance from './useZombFinance';
+import useZombFinance from './useTombFinance';
 import { BigNumber } from 'ethers';
 import useRefresh from './useRefresh';
 

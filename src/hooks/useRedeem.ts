@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import useZombFinance from './useZombFinance';
+import useZombFinance from './useTombFinance';
 import { Bank } from '../tomb-finance';
 import useHandleTransactionReceipt from './useHandleTransactionReceipt';
 

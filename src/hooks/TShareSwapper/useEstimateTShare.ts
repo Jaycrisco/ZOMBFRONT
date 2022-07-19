@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import useZombFinance from '../useZombFinance';
+import useZombFinance from '../useTombFinance';
 import { useWallet } from 'use-wallet';
 import { BigNumber } from 'ethers';
 import { parseUnits } from 'ethers/lib/utils';

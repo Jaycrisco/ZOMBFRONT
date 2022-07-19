@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { BigNumber } from 'ethers';
-import useZombFinance from './useZombFinance';
+import useZombFinance from './useTombFinance';
 import { ContractName } from '../tomb-finance';
 import config from '../config';
 

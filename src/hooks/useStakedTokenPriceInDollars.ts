@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import useZombFinance from './useZombFinance';
+import useZombFinance from './useTombFinance';
 import config from '../config';
 import ERC20 from '../tomb-finance/ERC20';
 

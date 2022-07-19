@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import useRefresh from '../useRefresh';
-import useZombFinance from './../useZombFinance';
+import useZombFinance from './../useTombFinance';
 
 const useClaimRewardCheck = () => {
   const  { slowRefresh } = useRefresh();

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import useZombFinance from './useZombFinance';
+import useZombFinance from './useTombFinance';
 import useStakedBalanceOnMasonry from './useStakedBalanceOnMasonry';
 
 const useMasonryVersion = () => {

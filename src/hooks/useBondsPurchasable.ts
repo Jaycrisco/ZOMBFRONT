@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { BigNumber } from 'ethers';
 import ERC20 from '../tomb-finance/ERC20';
-import useZombFinance from './useZombFinance';
+import useZombFinance from './useTombFinance';
 import config from '../config';
 
 const useBondsPurchasable = () => {

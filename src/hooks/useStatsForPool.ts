@@ -1,5 +1,5 @@
 import { useCallback, useState, useEffect } from 'react';
-import useZombFinance from './useZombFinance';
+import useZombFinance from './useTombFinance';
 import { Bank } from '../tomb-finance';
 import { PoolStats } from '../tomb-finance/types';
 import config from '../config';

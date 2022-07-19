@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import useZombFinance from './useZombFinance';
+import useZombFinance from './useTombFinance';
 import { TokenStat } from '../tomb-finance/types';
 import useRefresh from './useRefresh';
 

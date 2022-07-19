@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { BigNumber } from 'ethers';
-import useZombFinance from './useZombFinance';
+import useZombFinance from './useTombFinance';
 import useRefresh from './useRefresh';
 
 const useStakedBalanceOnMasonry = () => {
