@@ -4,7 +4,7 @@ import { createGlobalStyle } from 'styled-components';
 import HomeImage from '../../assets/img/home.png';
 import useLpStats from '../../hooks/useLpStats';
 import { Box, Button, Grid, Paper, Typography } from '@material-ui/core';
-import useZombStats from '../../hooks/useZombStats';
+import useZombStats from '../../hooks/useTombStats';
 import TokenInput from '../../components/TokenInput';
 import useZombFinance from '../../hooks/useTombFinance';
 import { useWallet } from 'use-wallet';
