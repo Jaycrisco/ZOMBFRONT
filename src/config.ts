@@ -5,11 +5,11 @@ import { BankInfo } from './tomb-finance';
 
 const configurations: { [env: string]: Configuration } = {
   development: {
-    chainId: ChainId.ZSPTESTNET,
-    networkName: 'Fantom Opera Testnet',
-    ftmscanUrl: 'https://testnet.ftmscan.com',
-    defaultProvider: 'https://rpc.testnet.fantom.network/',
-    deployments: require('./tomb-finance/deployments/deployments.testing.json'),
+    chainId: ChainId.MAINNET,
+    networkName: 'Fantom Opera Mainnet',
+    ftmscanUrl: 'https://ftmscan.com',
+    defaultProvider: 'https://rpc.ftm.tools/',
+    deployments: require('./tomb-finance/deployments/deployments.mainnet.json'),
     externalTokens: {
       ZSP: ['0x2C26617034C840C9412CD67aE0Fc68A6755D00BF', 18],
       FUSDT: ['0x04068DA6C83AFCFA0e13ba15A6696662335D5B75', 6],
