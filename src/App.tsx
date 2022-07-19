@@ -6,7 +6,7 @@ import { ThemeProvider as TP1 } from 'styled-components';
 import { UseWalletProvider } from 'use-wallet';
 import usePromptNetwork from './hooks/useNetworkPrompt';
 import BanksProvider from './contexts/Banks';
-import ZombFinanceProvider from './contexts/ZombFinanceProvider';
+import ZombFinanceProvider from './contexts/TombFinanceProvider';
 import ModalsProvider from './contexts/Modals';
 import store from './state';
 import theme from './theme';
