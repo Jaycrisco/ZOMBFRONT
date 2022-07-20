@@ -161,7 +161,7 @@ const Home = () => {
         <Grid container spacing={3}>
     <Grid item  xs={12} sm={12} justify="center"  style={{ margin: '12px' }}>
             <Alert variant="filled" severity="warning">
-              <b>ZOMB is a taxed token, which means you will pay a service fee when selling ZOMB.
+              <b>ZOMB is not a taxed token, which means you will not pay a service fee when selling ZOMB.
       Please visit our <StyledLink target="_blank" href="https://docs.zomb.finance">documentation</StyledLink> before purchasing ZOMB or ZSHARE!</b>
             </Alert>
         </Grid>
